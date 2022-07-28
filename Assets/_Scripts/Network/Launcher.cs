@@ -44,7 +44,11 @@ namespace BraveHunterGames
         public override void OnJoinRandomFailed(short returnCode, string message)
         {
             Debug.Log("Could not find a room.");
-            PhotonNetwork.CreateRoom(null, new RoomOptions() { MaxPlayers = maxPlayersPerRoom });
+            PhotonNetwork.CreateRoom(null, new RoomOptions()
+            {
+                MaxPlayers = maxPlayersPerRoom,
+                PublishUserId = true
+            });
         }
 
         public override void OnJoinedRoom()
@@ -52,6 +56,7 @@ namespace BraveHunterGames
             Debug.Log("Joined in a room");
             Events.Connected?.Invoke();
         }
+
         #endregion
 
         public void Connect()

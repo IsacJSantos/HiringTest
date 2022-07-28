@@ -14,6 +14,8 @@ namespace BraveHunterGames
 
         const string NICK_NAME_PREF_KEY = "nickName"; // The key of nick name's Player Pref
 
+
+        #region MonoBehaviour Callbakcs
         private void Awake()
         {
             Events.Connected += OnConnected;
@@ -37,6 +39,8 @@ namespace BraveHunterGames
             _loginPanelCv.enabled = true;
             _connectingPanelCv.enabled = false;
         }
+        #endregion
+
 
         public void Login()
         {

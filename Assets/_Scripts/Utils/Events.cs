@@ -1,3 +1,5 @@
+using Photon.Pun;
+using Photon.Realtime;
 
 namespace BraveHunterGames.Utils 
 {
@@ -5,6 +7,8 @@ namespace BraveHunterGames.Utils
     {
         #region Network
         public static SimpleEvent Connected;
+        public static IntStringEvent PlayerLeftRoom;
+        public static IntStringEvent PlayerEnterRoom;
         #endregion
 
         #region Lobby
@@ -16,6 +20,9 @@ namespace BraveHunterGames.Utils
 
 
         public delegate void SimpleEvent();
+        public delegate void IntEvent(int i);
+        public delegate void IntStringEvent(int i, string s);
+        public delegate void PunPlayerEvent(Player p);
     }
    
 }

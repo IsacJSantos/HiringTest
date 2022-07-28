@@ -1,89 +1,52 @@
 using BraveHunterGames.Utils;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace BraveHunterGames
 {
-    public class LobbyCanvas : MonoBehaviour
+    public class LobbyCanvas : BaseCanvas
     {
-        [SerializeField] string _playerPanelEntryRef; // Reference to find this object in Resources folder
-        [SerializeField] Transform _playerListTrans; // 
 
-        [SerializeField] Canvas _canvas;
-
-        bool _isReady;
+        [SerializeField] Button _startGameButton;
 
         #region MonoBehaviour Callbacks
-        private void Awake()
+        protected override void Awake()
         {
-            Events.Connected += OnConnect;
-            Events.PlayerEnterRoom += OnPlayerEnter;
+            base.Awake();
+
+            Events.AllPlayersReady += OnAllPlayersReady;
         }
-        private void Start()
+
+        protected override void OnDestroy()
         {
-            _canvas.enabled = false;
-        }
-        private void OnDestroy()
-        {
-            Events.Connected -= OnConnect;
-            Events.PlayerEnterRoom -= OnPlayerEnter;
+
+            Events.AllPlayersReady -= OnAllPlayersReady;
+            base.OnDestroy();
         }
 
         #endregion
 
-        public void StartGame()
+        public override void ShowCanvas()
         {
-            Events.StartGame?.Invoke();
+           _startGameButton.gameObject.SetActive(NetworkManager.Instance.IsMasterClient);
+            base.ShowCanvas();
         }
+  
 
-        public void Ready()
+        void OnAllPlayersReady(bool allReady)
         {
-            _isReady = !_isReady;
-        }
+            if (!NetworkManager.Instance.IsMasterClient) return;
 
-        public void LeaveRoom()
-        {
-            Events.Logout?.Invoke();
-            _canvas.enabled = false;
-        }
-
-
-
-        void OnConnect()
-        {
-            InitPlayerList();
-            _canvas.enabled = true;
-        }
-
-        void OnPlayerEnter(int actorNumber, string nickName)
-        {
-            CreatePlayerPanel(actorNumber, nickName);
-        }
-
-        void InitPlayerList()
-        {
-            foreach (var player in NetworkManager.Instance.PlayerList)
-            {
-                if (player == null) return;
-
-                CreatePlayerPanel(player.ActorNumber, player.NickName);
-            }
+            ToggleStartGameButton(allReady);
 
         }
-
-        PlayerPanelEntry CreatePlayerPanel(int actorNumber, string nickName)
+       
+        void ToggleStartGameButton(bool interactable)
         {
-            GameObject ob = Resources.Load<GameObject>(_playerPanelEntryRef);
-            if (ob == null)
-            {
-                Debug.LogError($"Object '{_playerPanelEntryRef}' not found");
-                return null;
-            }
-
-            PlayerPanelEntry playerPanel = Instantiate(ob, _playerListTrans).GetComponent<PlayerPanelEntry>();
-            playerPanel.Init(actorNumber, nickName);
-            return playerPanel;
+            _startGameButton.interactable = interactable;
         }
+
     }
 
 }

@@ -51,12 +51,6 @@ namespace BraveHunterGames
             });
         }
 
-        public override void OnJoinedRoom()
-        {
-            Debug.Log("Joined in a room");
-            Events.Connected?.Invoke();
-        }
-
         #endregion
 
         public void Connect()

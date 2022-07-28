@@ -6,44 +6,53 @@ namespace BraveHunterGames
 {
     public class PlayerPanelEntry : MonoBehaviour
     {
+        public bool IsReady;
+        public int ActorNumber => _actorNumber;
+
         [SerializeField] TextMeshProUGUI _nickNameText;
         [SerializeField] TextMeshProUGUI _readyText;
 
-        [SerializeField] int _playerNumber;
+        [SerializeField] int _actorNumber;
 
         #region MonoBehaviour Callbacks
         private void Awake()
         {
-            // Events.PlayerEnterRoom += OnPlayerEnter;
             Events.PlayerLeftRoom += OnPlayerLeft;
+            Events.SetPlayerReady += OnSetPlayerReady;
         }
 
         private void OnDestroy()
         {
-            // Events.PlayerEnterRoom -= OnPlayerEnter;
             Events.PlayerLeftRoom -= OnPlayerLeft;
+            Events.SetPlayerReady -= OnSetPlayerReady;
         }
         #endregion
 
-        public void Init(int actorNumber, string nickName) 
+        public void Init(int actorNumber, string nickName)
         {
             _nickNameText.text = nickName;
-            _playerNumber = actorNumber;
+            _actorNumber = actorNumber;
         }
 
-        /*
-        void OnPlayerEnter(int actorNumber) 
-        {
 
-        }
-        */
 
         void OnPlayerLeft(int actorNumber, string nickName)
         {
-            if (actorNumber == _playerNumber)
+            if (actorNumber == _actorNumber)
             {
                 gameObject.SetActive(false);
             }
+        }
+
+        void OnSetPlayerReady(int actorNumber, bool ready)
+        {
+            if (actorNumber == _actorNumber)
+            {
+                IsReady = ready;
+                _readyText.text = IsReady ? "Ready" : "Unready";
+                Events.PlayerReady?.Invoke(actorNumber, IsReady);
+            }
+
         }
     }
 }

@@ -1,9 +1,10 @@
 using Photon.Pun;
-
+using UnityEngine;
 namespace BraveHunterGames.Utils
 {
     public class SingletonPunCallback<T> : MonoBehaviourPunCallbacks
     {
+        [SerializeField] bool _dontDestroy;
         public static T Instance => _instance;
 
         private static T _instance;
@@ -15,6 +16,8 @@ namespace BraveHunterGames.Utils
             if (_instance == null)
             {
                 _instance = GetComponent<T>();
+                if (_dontDestroy)
+                    DontDestroyOnLoad(gameObject);
             }
             else
                 Destroy(gameObject);

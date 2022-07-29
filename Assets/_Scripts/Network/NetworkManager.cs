@@ -18,9 +18,9 @@ namespace BraveHunterGames
         [SerializeField] List<Player> _playerList;
         [SerializeField] int _ownActorNumber;
 
-      
+
         #region MonoBehaviour Callbacks
-       
+
         #endregion
 
         #region Photon Callbacks
@@ -53,7 +53,7 @@ namespace BraveHunterGames
             PhotonNetwork.LeaveRoom();
         }
 
-        public void LoadScene(int sceneIndex) 
+        public void LoadScene(int sceneIndex)
         {
             PhotonNetwork.LoadLevel(sceneIndex);
         }
@@ -65,13 +65,32 @@ namespace BraveHunterGames
             this.photonView.RPC("SetPlayerReady", RpcTarget.AllBuffered, actorNumber, ready);
         }
 
+        public void InstantiateNetworkObject(string prefabName, Vector3 pos)
+        {
+            PhotonNetwork.Instantiate(prefabName, pos, Quaternion.identity);
+        }
+
+
         [PunRPC]
         void SetPlayerReady(int actorNumber, bool ready)
         {
             Events.SetPlayerReady?.Invoke(actorNumber, ready);
         }
+
         #endregion
 
+        #region GamePlay Methods
+        public void CallEnemyTriggerAnim(TriggerAnimType animType)
+        {
+            this.photonView.RPC("SetEnemyTriggerAnim", RpcTarget.All, (int)animType);
+        }
+
+        [PunRPC]
+        void SetEnemyTriggerAnim(int anim)
+        {
+            Events.SetEnemyTriggerAnim?.Invoke((TriggerAnimType)anim);
+        }
+        #endregion
 
         #region Gameplay Methods
 

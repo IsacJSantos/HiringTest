@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using BraveHunterGames.Utils;
 
 namespace BraveHunterGames
 {
@@ -15,7 +16,7 @@ namespace BraveHunterGames
 
         public override void Enter()
         {
-            _anim.SetTrigger("Attack");
+            NetworkManager.Instance.CallEnemyTriggerAnim(TriggerAnimType.Attack);
             base.Enter();
         }
 
@@ -29,7 +30,6 @@ namespace BraveHunterGames
 
         public override void Exit()
         {
-            _anim.ResetTrigger("Attack");
             base.Exit();
         }
 

@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
+using BraveHunterGames.Utils;
+
 
 namespace BraveHunterGames
 {
@@ -18,7 +20,7 @@ namespace BraveHunterGames
             _agent.speed = _pursueSpeed;
             _agent.SetDestination(_target.position);
             _agent.isStopped = false;
-            _anim.SetTrigger("Run");
+            NetworkManager.Instance.CallEnemyTriggerAnim(TriggerAnimType.Run);
             base.Enter();
         }
 
@@ -43,7 +45,6 @@ namespace BraveHunterGames
         public override void Exit()
         {
             _agent.isStopped = true;
-            _anim.ResetTrigger("Run");
             base.Exit();
         }
     }

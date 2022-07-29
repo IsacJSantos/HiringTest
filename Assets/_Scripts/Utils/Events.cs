@@ -27,6 +27,9 @@ namespace BraveHunterGames.Utils
         public static BoolEvent AllPlayersReady;
         #endregion
 
+        #region Enemy
+        public static TriggerAnimTypeEvent SetEnemyTriggerAnim;
+        #endregion
 
 
         public delegate void SimpleEvent();
@@ -36,6 +39,7 @@ namespace BraveHunterGames.Utils
         public delegate void IntBoolEvent(int i, bool b);
         public delegate void PunPlayerEvent(Player p);
         public delegate void MenuTypeEvent(MenuType mt);
+        public delegate void TriggerAnimTypeEvent(TriggerAnimType ta);
     }
    
 }

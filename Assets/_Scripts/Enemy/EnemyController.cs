@@ -9,12 +9,13 @@ namespace BraveHunterGames
         [SerializeField] GameObject _npc;
         [SerializeField] Animator _animator;
         [SerializeField] State _currentState;
+        [SerializeField] LayerMask _visObstacleLayers; // Layers that cover the enemy's view
 
         #region MonoBehabiour Callbacks
 
         private void Start()
         {
-            _currentState = new IdleState(_npc,_agent,_animator);
+            _currentState = new IdleState(_npc,_agent,_animator,_visObstacleLayers);
         }
 
         private void Update()

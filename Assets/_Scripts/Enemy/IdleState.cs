@@ -6,28 +6,28 @@ namespace BraveHunterGames
     public class IdleState : State
     {
 
-        public IdleState(GameObject npc, NavMeshAgent agent, Animator anim) : base(npc, agent, anim)
+        public IdleState(GameObject npc, NavMeshAgent agent, Animator anim, LayerMask viewObstacleLayers) : base(npc, agent, anim, viewObstacleLayers)
         {
             StateName = STATE.IDLE;
         }
 
         public override void Enter()
         {
+            _agent.isStopped = true;
             // _anim.SetTrigger("Idle");
             base.Enter();
         }
 
         public override void Update()
         {
-            int aux = Random.Range(0, 101);
-            if (aux == 1) // Go to pursue state
+            if (IsLookingAtTarget()) // Go to pursue state
             {
-                _nextState = new PursueState(_npc, _agent, _anim, null/*Temp null*/);
+                _nextState = new PursueState(_npc, _agent, _anim,_viewObstacleLayers, _target);
                 _stage = EVENT.EXIT;
             }
-            else if(aux == 2)// Go to Patrol State
+            else if(Random.Range(0, 2000) <= 5)// Go to Patrol State
             {
-                _nextState = new PatrolState(_npc, _agent, _anim);
+                _nextState = new PatrolState(_npc, _agent, _anim, _viewObstacleLayers);
                 _stage = EVENT.EXIT;
             }
             base.Update();

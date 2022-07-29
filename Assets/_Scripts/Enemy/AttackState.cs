@@ -6,8 +6,8 @@ namespace BraveHunterGames
     public class AttackState : State
     {
         Transform _playerTransform;
-        public AttackState(GameObject npc, NavMeshAgent agent, Animator anim, Transform playerTransform)
-            : base(npc, agent, anim)
+        public AttackState(GameObject npc, NavMeshAgent agent, Animator anim, LayerMask viewObstacleLayers, Transform playerTransform)
+            : base(npc, agent, anim, viewObstacleLayers)
         {
             StateName = STATE.ATTACK;
             _playerTransform = playerTransform;
@@ -20,16 +20,8 @@ namespace BraveHunterGames
 
         public override void Update()
         {
-            int aux = Random.Range(0, 101);
-            if (aux == 1) // Go to Pursue State
-            {
-                _nextState = new PursueState(_npc, _agent, _anim, null/*temp null*/);
-                _stage = EVENT.EXIT;
-            }
-            else 
-            {
-               //
-            }
+            _nextState = new IdleState(_npc, _agent, _anim, _viewObstacleLayers);
+            _stage = EVENT.EXIT;
 
             base.Update();
         }

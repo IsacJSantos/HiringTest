@@ -1,33 +1,42 @@
 using UnityEngine.AI;
 using UnityEngine;
+using BraveHunterGames.Utils;
 
-namespace BraveHunterGames 
+namespace BraveHunterGames
 {
     public class PatrolState : State
     {
-        public PatrolState(GameObject npc, NavMeshAgent agent, Animator anim)
-            : base(npc, agent, anim) 
+        float _patrolSpeed = 2;
+        public PatrolState(GameObject npc, NavMeshAgent agent, Animator anim, LayerMask viewObstacleLayers)
+            : base(npc, agent, anim, viewObstacleLayers)
         {
             StateName = STATE.PATROL;
         }
 
         public override void Enter()
         {
+            _agent.SetDestination(GameManager.Instance.GetRandomEnemyCheckPos());
+            _agent.speed = _patrolSpeed;
+            _agent.isStopped = false;
+            NetworkManager.Instance.CallEnemyTriggerAnim(TriggerAnimType.Walk);
             base.Enter();
         }
 
         public override void Update()
         {
-            int aux = Random.Range(0, 101);
-            if (aux == 1) // Go to Pursue State
+            if (IsLookingAtTarget()) // Go to Pursue State
             {
-                _nextState = new PursueState(_npc, _agent, _anim, null/*temp null*/);
+                _nextState = new PursueState(_npc, _agent, _anim, _viewObstacleLayers, _target);
                 _stage = EVENT.EXIT;
             }
-            else if (aux == 2)// Go to Idle State
+            else if (Random.Range(0, 2000) <= 1)// Go to Idle State
             {
-                _nextState = new IdleState(_npc, _agent, _anim);
+                _nextState = new IdleState(_npc, _agent, _anim, _viewObstacleLayers);
                 _stage = EVENT.EXIT;
+            }
+            else if (IsInDestination())
+            {
+                _agent.SetDestination(GameManager.Instance.GetRandomEnemyCheckPos());
             }
             base.Update();
         }
@@ -36,6 +45,8 @@ namespace BraveHunterGames
         {
             base.Exit();
         }
+
+
     }
 }
 

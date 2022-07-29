@@ -17,6 +17,7 @@ namespace BraveHunterGames
             _agent.SetDestination(GameManager.Instance.GetRandomEnemyCheckPos());
             _agent.speed = _patrolSpeed;
             _agent.isStopped = false;
+            _anim.SetTrigger("Walk");
             base.Enter();
         }
 
@@ -41,6 +42,7 @@ namespace BraveHunterGames
 
         public override void Exit()
         {
+            _anim.ResetTrigger("Walk");
             base.Exit();
         }
 

@@ -17,7 +17,8 @@ namespace BraveHunterGames
         {
             _agent.speed = _pursueSpeed;
             _agent.SetDestination(_target.position);
-            Debug.Log(_target.name);
+            _agent.isStopped = false;
+            _anim.SetTrigger("Run");
             base.Enter();
         }
 
@@ -41,7 +42,8 @@ namespace BraveHunterGames
 
         public override void Exit()
         {
-
+            _agent.isStopped = true;
+            _anim.ResetTrigger("Run");
             base.Exit();
         }
     }

@@ -14,7 +14,7 @@ namespace BraveHunterGames
         public override void Enter()
         {
             _agent.isStopped = true;
-            // _anim.SetTrigger("Idle");
+            _anim.SetTrigger("Idle");
             base.Enter();
         }
 
@@ -35,7 +35,7 @@ namespace BraveHunterGames
 
         public override void Exit()
         {
-            // _anim.ResetTrigger("Idle");
+            _anim.ResetTrigger("Idle");
             base.Exit();
         }
 

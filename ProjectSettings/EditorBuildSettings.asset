@@ -8,9 +8,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Scenes/Testing/Lobby.unity
     guid: e7fd6ee2b3f2b7b4086cfb05f94807fd
-  - enabled: 0
-    path: Assets/_Scenes/Testing/GamePlay.unity
-    guid: cde0b6054e3531243ba3a79259cee526
   - enabled: 1
     path: Assets/_Scenes/Testing/enemyTestScene.unity
     guid: c4ed88454f9d4d74386205f5291e8428

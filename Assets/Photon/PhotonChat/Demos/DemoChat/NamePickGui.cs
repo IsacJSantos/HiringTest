@@ -7,6 +7,7 @@
 
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 
 namespace Photon.Chat.Demo
@@ -36,7 +37,7 @@ namespace Photon.Chat.Demo
         // new UI will fire "EndEdit" event also when loosing focus. So check "enter" key and only then StartChat.
         public void EndEditOnEnter()
         {
-            if (Input.GetKey(KeyCode.Return) || Input.GetKey(KeyCode.KeypadEnter))
+            if (/*Input.GetKey(KeyCode.Return) || Input.GetKey(KeyCode.KeypadEnter)*/ Keyboard.current.enterKey.wasPressedThisFrame)
             {
                 this.StartChat();
             }

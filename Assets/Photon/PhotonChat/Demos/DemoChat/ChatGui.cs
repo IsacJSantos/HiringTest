@@ -9,6 +9,7 @@ using System.Collections.Generic;
 
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 using Photon.Chat;
 using Photon.Realtime;
@@ -200,7 +201,7 @@ namespace Photon.Chat.Demo
 
         public void OnEnterSend()
         {
-            if (Input.GetKey(KeyCode.Return) || Input.GetKey(KeyCode.KeypadEnter))
+            if (/*Input.GetKey(KeyCode.Return) || Input.GetKey(KeyCode.KeypadEnter)*/ Keyboard.current.enterKey.wasPressedThisFrame)
             {
                 this.SendChatMessage(this.InputFieldChat.text);
                 this.InputFieldChat.text = "";

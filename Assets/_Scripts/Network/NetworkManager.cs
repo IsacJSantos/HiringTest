@@ -65,9 +65,9 @@ namespace BraveHunterGames
             this.photonView.RPC("SetPlayerReady", RpcTarget.AllBuffered, actorNumber, ready);
         }
 
-        public void InstantiateNetworkObject(string prefabName, Vector3 pos)
+        public GameObject InstantiateNetworkObject(string prefabName, Vector3 pos)
         {
-            PhotonNetwork.Instantiate(prefabName, pos, Quaternion.identity);
+           return PhotonNetwork.Instantiate(prefabName, pos, Quaternion.identity);
         }
 
 
@@ -90,6 +90,7 @@ namespace BraveHunterGames
         {
             Events.SetEnemyTriggerAnim?.Invoke((TriggerAnimType)anim);
         }
+
         #endregion
 
         #region Gameplay Methods

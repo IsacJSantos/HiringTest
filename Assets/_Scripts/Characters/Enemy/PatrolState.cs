@@ -6,7 +6,7 @@ namespace BraveHunterGames
 {
     public class PatrolState : State
     {
-        float _patrolSpeed = 2;
+        float _patrolSpeed = 1.5f;
         public PatrolState(GameObject npc, NavMeshAgent agent, Animator anim, LayerMask viewObstacleLayers)
             : base(npc, agent, anim, viewObstacleLayers)
         {

@@ -62,6 +62,15 @@ public partial class @Input : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Press(behavior=2)"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Look"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""ca3d616c-2ec9-4272-b187-d63e66eb1f9a"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -185,6 +194,17 @@ public partial class @Input : IInputActionCollection2, IDisposable
                     ""action"": ""Run"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dca81c07-d1f3-430a-b040-b2408970c0d4"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keybord and Mouse"",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -225,6 +245,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
         m_PlayerControl_XMove = m_PlayerControl.FindAction("XMove", throwIfNotFound: true);
         m_PlayerControl_YMove = m_PlayerControl.FindAction("YMove", throwIfNotFound: true);
         m_PlayerControl_Run = m_PlayerControl.FindAction("Run", throwIfNotFound: true);
+        m_PlayerControl_Look = m_PlayerControl.FindAction("Look", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -288,6 +309,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerControl_XMove;
     private readonly InputAction m_PlayerControl_YMove;
     private readonly InputAction m_PlayerControl_Run;
+    private readonly InputAction m_PlayerControl_Look;
     public struct PlayerControlActions
     {
         private @Input m_Wrapper;
@@ -296,6 +318,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
         public InputAction @XMove => m_Wrapper.m_PlayerControl_XMove;
         public InputAction @YMove => m_Wrapper.m_PlayerControl_YMove;
         public InputAction @Run => m_Wrapper.m_PlayerControl_Run;
+        public InputAction @Look => m_Wrapper.m_PlayerControl_Look;
         public InputActionMap Get() { return m_Wrapper.m_PlayerControl; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -317,6 +340,9 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 @Run.started -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnRun;
                 @Run.performed -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnRun;
                 @Run.canceled -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnRun;
+                @Look.started -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnLook;
+                @Look.performed -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnLook;
+                @Look.canceled -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnLook;
             }
             m_Wrapper.m_PlayerControlActionsCallbackInterface = instance;
             if (instance != null)
@@ -333,6 +359,9 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 @Run.started += instance.OnRun;
                 @Run.performed += instance.OnRun;
                 @Run.canceled += instance.OnRun;
+                @Look.started += instance.OnLook;
+                @Look.performed += instance.OnLook;
+                @Look.canceled += instance.OnLook;
             }
         }
     }
@@ -361,5 +390,6 @@ public partial class @Input : IInputActionCollection2, IDisposable
         void OnXMove(InputAction.CallbackContext context);
         void OnYMove(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
+        void OnLook(InputAction.CallbackContext context);
     }
 }

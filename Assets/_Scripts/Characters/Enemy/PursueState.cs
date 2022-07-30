@@ -7,7 +7,7 @@ namespace BraveHunterGames
 {
     public class PursueState : State
     {
-        float _pursueSpeed = 5;
+        float _pursueSpeed = 3;
         public PursueState(GameObject npc, NavMeshAgent agent, Animator anim, LayerMask viewObstacleLayers, Transform target)
             : base(npc, agent, anim, viewObstacleLayers)
         {

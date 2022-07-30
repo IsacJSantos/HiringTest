@@ -9,25 +9,37 @@ namespace BraveHunterGames
         [SerializeField] Rigidbody _rb;
         [SerializeField] float _walkSpeed;
         [SerializeField] float _runSpeed;
+        [SerializeField] Transform _cameraTransform;
 
-        int _xValue;
-        int _yValue;
+
+        Transform _transform;
+        float _xValue;
+        float _yValue;
         bool _isRunning;
-        Input _controls;
+        float _blendRunValue;
+        float _acceleration = 1.8f;
+        InputManager _inputManager;
 
         #region MonoBehaviour Callbacks
         private void Awake()
         {
-            _controls = new Input();
-            _controls.PlayerControl.Interact.performed += context => Interact();
-            _controls.PlayerControl.XMove.performed += context => _xValue = (int)context.ReadValue<Vector2>().x;
-            _controls.PlayerControl.YMove.performed += context => _yValue = (int)context.ReadValue<Vector2>().y;
-            _controls.PlayerControl.Run.performed += context => ToggleRun();
+            _transform = GetComponent<Transform>();
+        }
+
+        private void Start()
+        {
+            _inputManager = InputManager.Instance;
         }
 
         private void Update()
         {
             SetAnimation();
+            RotatePlayer();
+
+            if (_inputManager.PlayerInteractThisFrame()) Interact();
+            if (_inputManager.PlayerRunThisFrame()) ToggleRun();
+            _xValue = _inputManager.GetPlayerMoveX().x;
+            _yValue = _inputManager.GetPlayerMoveY().y;
         }
 
         private void FixedUpdate()
@@ -35,27 +47,40 @@ namespace BraveHunterGames
             Move();
         }
 
-        private void OnEnable()
-        {
-            _controls.Enable();
-        }
-
-        private void OnDisable()
-        {
-            _controls.Disable();
-        }
-
         #endregion
 
         void Move()
         {
             float speed = _isRunning ? _runSpeed : _walkSpeed;
-            _rb.velocity = new Vector3(_xValue, 0, _yValue) * speed * Time.fixedDeltaTime;
+            _rb.velocity = _transform.TransformVector(new Vector3(_xValue, 0, _yValue)).normalized * speed * Time.fixedDeltaTime;
         }
+
+        void RotatePlayer()
+        {
+            Vector3 newRotation = new Vector3(_transform.eulerAngles.x,_cameraTransform.eulerAngles.y,_transform.eulerAngles.z);
+            _transform.eulerAngles = newRotation;
+        }
+
         private void SetAnimation()
         {
-            _anim.SetInteger("vertical", _yValue);
-            _anim.SetInteger("horizontal", _xValue);
+            _anim.SetInteger("vertical", (int)_yValue);
+            _anim.SetInteger("horizontal", (int)_xValue);
+            _anim.SetFloat("blendRun", _blendRunValue);
+
+            if (_isRunning)
+            {
+                if (_blendRunValue < 1)
+                    _blendRunValue += _acceleration * Time.deltaTime;
+                else
+                    _blendRunValue = 1;
+            }
+            else
+            {
+                if (_blendRunValue > 0)
+                    _blendRunValue -= _acceleration * Time.deltaTime;
+                else
+                    _blendRunValue = 0;
+            }
         }
         void Interact()
         {

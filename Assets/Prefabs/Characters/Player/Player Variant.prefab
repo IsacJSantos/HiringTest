@@ -29,15 +29,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 653b1b932e5e52048ad66272dba4412d, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 653b1b932e5e52048ad66272dba4412d, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 653b1b932e5e52048ad66272dba4412d, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 653b1b932e5e52048ad66272dba4412d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -53,7 +53,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 653b1b932e5e52048ad66272dba4412d, type: 3}
       propertyPath: m_Name
-      value: Player
+      value: Player Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 653b1b932e5e52048ad66272dba4412d, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 653b1b932e5e52048ad66272dba4412d, type: 3}
       propertyPath: m_Controller
@@ -89,7 +93,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!136 &861790903
 CapsuleCollider:
@@ -102,9 +106,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.21
-  m_Height: 1.66
+  m_Height: 1.6169171
   m_Direction: 1
-  m_Center: {x: 0, y: 0.82, z: 0}
+  m_Center: {x: 0, y: 0.80756986, z: 0}
 --- !u!114 &861790902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119,5 +123,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _anim: {fileID: 1165699264166922699}
   _rb: {fileID: 861790904}
-  _xValue: 0
-  _yValue: 0
+  _walkSpeed: 70
+  _runSpeed: 230
+  _cameraTransform: {fileID: 0}

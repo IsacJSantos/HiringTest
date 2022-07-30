@@ -53,6 +53,15 @@ public partial class @Input : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Press(behavior=2)"",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Run"",
+                    ""type"": ""Button"",
+                    ""id"": ""e81f45aa-a00d-4bef-a2f0-37208e055b40"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -147,7 +156,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""Up"",
                     ""id"": ""f1886733-83f3-406c-b86b-cba1ee72dce1"",
-                    ""path"": ""<Keyboard>/s"",
+                    ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keybord and Mouse"",
@@ -158,13 +167,24 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""Down"",
                     ""id"": ""ea325a63-47b5-460c-b02d-25201eac4a96"",
-                    ""path"": ""<Keyboard>/w"",
+                    ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keybord and Mouse"",
                     ""action"": ""YMove"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ba596316-b132-420d-bd90-b7d715a1c8ea"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keybord and Mouse"",
+                    ""action"": ""Run"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -204,6 +224,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
         m_PlayerControl_Interact = m_PlayerControl.FindAction("Interact", throwIfNotFound: true);
         m_PlayerControl_XMove = m_PlayerControl.FindAction("XMove", throwIfNotFound: true);
         m_PlayerControl_YMove = m_PlayerControl.FindAction("YMove", throwIfNotFound: true);
+        m_PlayerControl_Run = m_PlayerControl.FindAction("Run", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -266,6 +287,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerControl_Interact;
     private readonly InputAction m_PlayerControl_XMove;
     private readonly InputAction m_PlayerControl_YMove;
+    private readonly InputAction m_PlayerControl_Run;
     public struct PlayerControlActions
     {
         private @Input m_Wrapper;
@@ -273,6 +295,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
         public InputAction @Interact => m_Wrapper.m_PlayerControl_Interact;
         public InputAction @XMove => m_Wrapper.m_PlayerControl_XMove;
         public InputAction @YMove => m_Wrapper.m_PlayerControl_YMove;
+        public InputAction @Run => m_Wrapper.m_PlayerControl_Run;
         public InputActionMap Get() { return m_Wrapper.m_PlayerControl; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -291,6 +314,9 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 @YMove.started -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnYMove;
                 @YMove.performed -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnYMove;
                 @YMove.canceled -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnYMove;
+                @Run.started -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnRun;
+                @Run.performed -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnRun;
+                @Run.canceled -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnRun;
             }
             m_Wrapper.m_PlayerControlActionsCallbackInterface = instance;
             if (instance != null)
@@ -304,6 +330,9 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 @YMove.started += instance.OnYMove;
                 @YMove.performed += instance.OnYMove;
                 @YMove.canceled += instance.OnYMove;
+                @Run.started += instance.OnRun;
+                @Run.performed += instance.OnRun;
+                @Run.canceled += instance.OnRun;
             }
         }
     }
@@ -331,5 +360,6 @@ public partial class @Input : IInputActionCollection2, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnXMove(InputAction.CallbackContext context);
         void OnYMove(InputAction.CallbackContext context);
+        void OnRun(InputAction.CallbackContext context);
     }
 }

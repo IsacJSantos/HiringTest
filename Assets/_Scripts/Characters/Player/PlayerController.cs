@@ -5,47 +5,66 @@ namespace BraveHunterGames
 {
     public class PlayerController : MonoBehaviour
     {
-        [SerializeField] int _speed;
-        public Input Controls;
+        [SerializeField] Animator _anim;
+        [SerializeField] Rigidbody _rb;
+        [SerializeField] float _walkSpeed;
+        [SerializeField] float _runSpeed;
 
-        [SerializeField] float _xValue;
-        [SerializeField] float _yValue;
+        int _xValue;
+        int _yValue;
+        bool _isRunning;
+        Input _controls;
 
-        Vector3 _moveDir;
         #region MonoBehaviour Callbacks
         private void Awake()
         {
-            Controls = new Input();
-            Controls.PlayerControl.Interact.performed += context => Interact();
-            Controls.PlayerControl.XMove.performed += context => _xValue = context.ReadValue<Vector2>().x;
-            Controls.PlayerControl.YMove.performed += context => _yValue = context.ReadValue<Vector2>().y;
+            _controls = new Input();
+            _controls.PlayerControl.Interact.performed += context => Interact();
+            _controls.PlayerControl.XMove.performed += context => _xValue = (int)context.ReadValue<Vector2>().x;
+            _controls.PlayerControl.YMove.performed += context => _yValue = (int)context.ReadValue<Vector2>().y;
+            _controls.PlayerControl.Run.performed += context => ToggleRun();
         }
 
         private void Update()
         {
-            transform.Translate(_moveDir * _speed * Time.deltaTime);
+            SetAnimation();
+        }
+
+        private void FixedUpdate()
+        {
+            Move();
         }
 
         private void OnEnable()
         {
-            Controls.Enable();
+            _controls.Enable();
         }
 
         private void OnDisable()
         {
-            Controls.Disable();
+            _controls.Disable();
         }
 
         #endregion
 
-        private void Move(int vect)
+        void Move()
         {
-            print("Move " + vect);
-            //_moveDir = new Vector3(vect.x, 0, vect.y);
+            float speed = _isRunning ? _runSpeed : _walkSpeed;
+            _rb.velocity = new Vector3(_xValue, 0, _yValue) * speed * Time.fixedDeltaTime;
+        }
+        private void SetAnimation()
+        {
+            _anim.SetInteger("vertical", _yValue);
+            _anim.SetInteger("horizontal", _xValue);
         }
         void Interact()
         {
             print("Interact");
+        }
+
+        void ToggleRun()
+        {
+            _isRunning = !_isRunning;
         }
     }
 }

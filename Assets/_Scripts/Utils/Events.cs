@@ -1,45 +1,37 @@
-using Photon.Pun;
-using Photon.Realtime;
+using System;
 
 namespace BraveHunterGames.Utils 
 {
     public static class Events 
     {
         #region Menus
-        public static MenuTypeEvent OpenMenu;
-        public static MenuTypeEvent HideMenu;
+        public static Action<MenuType> OpenMenu;
+        public static Action<MenuType> HideMenu;
         #endregion
 
         #region Network
-        public static SimpleEvent Connected;
-        public static IntStringEvent PlayerLeftRoom;
-        public static IntStringEvent PlayerEnterRoom;
+        public static Action Connected;
+        public static Action ConnectFail;
+        public static Action<int, string> PlayerLeftRoom;
+        public static Action<int, string> PlayerEnterRoom;
 
-        public static IntBoolEvent SetPlayerReady;
-        public static IntBoolEvent PlayerReady;
+        public static Action<int, bool> SetPlayerReady;
+        public static Action<int, bool> PlayerReady;
+
         #endregion
 
         #region Lobby
-        public static SimpleEvent Login;
-        public static SimpleEvent StartGame;
-        public static SimpleEvent Logout;
+        public static Action InitLogin;
+        public static Action StartGame;
+        public static Action Logout;
 
-        public static BoolEvent AllPlayersReady;
+        public static Action<bool> AllPlayersReady;
         #endregion
 
         #region Enemy
-        public static TriggerAnimTypeEvent SetEnemyTriggerAnim;
+        public static Action<TriggerAnimType> SetEnemyTriggerAnim;
         #endregion
 
-
-        public delegate void SimpleEvent();
-        public delegate void IntEvent(int i);
-        public delegate void BoolEvent(bool b);
-        public delegate void IntStringEvent(int i, string s);
-        public delegate void IntBoolEvent(int i, bool b);
-        public delegate void PunPlayerEvent(Player p);
-        public delegate void MenuTypeEvent(MenuType mt);
-        public delegate void TriggerAnimTypeEvent(TriggerAnimType ta);
     }
    
 }

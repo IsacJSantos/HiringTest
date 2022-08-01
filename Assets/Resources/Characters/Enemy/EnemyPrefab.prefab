@@ -124,7 +124,7 @@ MonoBehaviour:
   _animator: {fileID: 2371193196164560717}
   _visObstacleLayers:
     serializedVersion: 2
-    m_Bits: 384
+    m_Bits: 896
 --- !u!114 &4066257354885922093
 MonoBehaviour:
   m_ObjectHideFlags: 0

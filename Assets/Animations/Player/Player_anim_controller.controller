@@ -1248,7 +1248,7 @@ AnimatorStateTransition:
   - m_ConditionMode: 6
     m_ConditionEvent: vertical
     m_EventTreshold: 0
-  - m_ConditionMode: 3
+  - m_ConditionMode: 6
     m_ConditionEvent: horizontal
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}

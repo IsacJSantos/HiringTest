@@ -7,6 +7,8 @@ namespace HiringTest
     public class AttackState : State
     {
         Transform _playerTransform;
+        float _attackDelay = 3f;
+        float _time;
         public AttackState(GameObject npc, NavMeshAgent agent, Animator anim, LayerMask viewObstacleLayers, Transform playerTransform)
             : base(npc, agent, anim, viewObstacleLayers)
         {
@@ -16,14 +18,18 @@ namespace HiringTest
 
         public override void Enter()
         {
+            _time = Time.time + _attackDelay;
             NetworkManager.Instance.CallEnemyTriggerAnim(TriggerAnimType.Attack);
             base.Enter();
         }
 
         public override void Update()
         {
-            _nextState = new IdleState(_npc, _agent, _anim, _viewObstacleLayers);
-            _stage = StateEventType.EXIT;
+            if (Time.time >= _time)
+            {
+                _nextState = new IdleState(_npc, _agent, _anim, _viewObstacleLayers);
+                _stage = StateEventType.EXIT;
+            }
 
             base.Update();
         }

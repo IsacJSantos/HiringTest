@@ -15,9 +15,9 @@ namespace HiringTest
         protected Transform _target;
         protected LayerMask _viewObstacleLayers; // Layers that cover the AI's view
 
-        float _viewRadius = 10;
+        float _viewRadius = 9;
         float _viewDistance = 10;
-        float _viewAngle = 30;
+        float _viewAngle = 90;
         int _targetLayerMask = 3;
         float _viewDelay = 0.5f; // Frequency at which the enemy's vision is updated
         RaycastHit _rayHit;

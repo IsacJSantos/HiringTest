@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
-namespace BraveHunterGames
+namespace HiringTest
 {
     public class CinemachinePOVExtension : CinemachineExtension
     {

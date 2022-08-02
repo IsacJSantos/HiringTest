@@ -1,8 +1,9 @@
-using BraveHunterGames.Utils;
+using HiringTest.Utils;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
-namespace BraveHunterGames
+namespace HiringTest
 {
     public class PlayerPanelEntry : MonoBehaviour
     {
@@ -12,19 +13,24 @@ namespace BraveHunterGames
         [SerializeField] TextMeshProUGUI _nickNameText;
         [SerializeField] TextMeshProUGUI _readyText;
 
-        [SerializeField] int _actorNumber;
+        [SerializeField] Image _bottonLineImg;
+        [SerializeField] Image _readyBg;
+
+        int _actorNumber;
 
         #region MonoBehaviour Callbacks
         private void Awake()
         {
             Events.PlayerLeftRoom += OnPlayerLeft;
             Events.SetPlayerReady += OnSetPlayerReady;
+            Events.Logout += OnLogout;
         }
 
         private void OnDestroy()
         {
             Events.PlayerLeftRoom -= OnPlayerLeft;
             Events.SetPlayerReady -= OnSetPlayerReady;
+            Events.Logout -= OnLogout;
         }
         #endregion
 
@@ -44,15 +50,22 @@ namespace BraveHunterGames
             }
         }
 
-        void OnSetPlayerReady(int actorNumber, bool ready)
+        void OnSetPlayerReady(int actorNumber, bool isReady)
         {
             if (actorNumber == _actorNumber)
             {
-                IsReady = ready;
-                _readyText.text = IsReady ? "Ready" : "Unready";
+                IsReady = isReady;
+                _readyText.text = isReady ? "Ready" : "Unready";
+                _bottonLineImg.color = isReady ? Color.green : Color.red;
+                _readyBg.color = isReady ? Color.green : Color.red;
                 Events.PlayerReady?.Invoke(actorNumber, IsReady);
             }
 
+        }
+
+        void OnLogout() 
+        {
+            gameObject?.SetActive(false);
         }
     }
 }

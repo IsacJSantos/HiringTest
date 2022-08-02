@@ -1,8 +1,8 @@
 using UnityEngine;
 using UnityEngine.AI;
-using BraveHunterGames.Utils;
+using HiringTest.Utils;
 
-namespace BraveHunterGames
+namespace HiringTest
 {
     public class AttackState : State
     {

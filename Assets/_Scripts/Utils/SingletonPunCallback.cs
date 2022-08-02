@@ -1,6 +1,6 @@
 using Photon.Pun;
 using UnityEngine;
-namespace BraveHunterGames.Utils
+namespace HiringTest.Utils
 {
     public class SingletonPunCallback<T> : MonoBehaviourPunCallbacks
     {

@@ -1,17 +1,18 @@
 using System;
 
-namespace BraveHunterGames.Utils 
+namespace HiringTest.Utils 
 {
     public static class Events 
     {
         #region Menus
-        public static Action<MenuType> OpenMenu;
-        public static Action<MenuType> HideMenu;
+        public static Action<CanvasType> OpenCanvas;
+        public static Action<CanvasType> HideCanvas;
         #endregion
 
         #region Network
         public static Action Connected;
         public static Action ConnectFail;
+        public static Action Disconnected;
         public static Action<int, string> PlayerLeftRoom;
         public static Action<int, string> PlayerEnterRoom;
 

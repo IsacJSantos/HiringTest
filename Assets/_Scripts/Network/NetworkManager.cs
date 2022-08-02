@@ -1,11 +1,11 @@
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
-using BraveHunterGames.Utils;
+using HiringTest.Utils;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BraveHunterGames
+namespace HiringTest
 {
     [DisallowMultipleComponent]
     public class NetworkManager : SingletonPunCallback<NetworkManager>
@@ -15,15 +15,46 @@ namespace BraveHunterGames
 
         public bool IsMasterClient => PhotonNetwork.IsMasterClient;
 
+        [SerializeField] private byte maxPlayersPerRoom = 2;
         [SerializeField] List<Player> _playerList;
         [SerializeField] int _ownActorNumber;
+
+        string gameVersion = "1";
 
 
         #region MonoBehaviour Callbacks
 
+        protected override void Awake()
+        {
+            base.Awake();
+            PhotonNetwork.AutomaticallySyncScene = true;
+        }
+
+
         #endregion
 
         #region Photon Callbacks
+
+        public override void OnConnectedToMaster()
+        {
+            Debug.Log("Connected to Master");
+            PhotonNetwork.JoinRandomRoom();
+        }
+
+        public override void OnDisconnected(DisconnectCause cause)
+        {
+            Debug.Log("Disconnected");
+        }
+
+        public override void OnJoinRandomFailed(short returnCode, string message)
+        {
+            Debug.Log("Could not find a room.");
+            PhotonNetwork.CreateRoom(null, new RoomOptions()
+            {
+                MaxPlayers = maxPlayersPerRoom,
+                PublishUserId = true
+            });
+        }
 
 
         public override void OnJoinedRoom()
@@ -34,6 +65,13 @@ namespace BraveHunterGames
             _playerList = PhotonNetwork.PlayerList.ToList();
             Events.Connected?.Invoke();
         }
+
+
+        public override void OnCreateRoomFailed(short returnCode, string message)
+        {
+            Events.ConnectFail?.Invoke();
+        }
+
         public override void OnPlayerEnteredRoom(Player newPlayer)
         {
             Events.PlayerEnterRoom?.Invoke(newPlayer.ActorNumber, newPlayer.NickName);
@@ -50,7 +88,8 @@ namespace BraveHunterGames
 
         public void LeaveRoom()
         {
-            PhotonNetwork.LeaveRoom();
+            PhotonNetwork.Disconnect();
+            Events.Disconnected?.Invoke();
         }
 
         public void LoadScene(int sceneIndex)
@@ -59,6 +98,19 @@ namespace BraveHunterGames
         }
 
         #region Lobby Methods
+
+        public void TryLogin() 
+        {
+            if (PhotonNetwork.IsConnected)
+            {
+                PhotonNetwork.JoinRandomRoom();
+            }
+            else
+            {
+                PhotonNetwork.ConnectUsingSettings();
+                PhotonNetwork.GameVersion = gameVersion;
+            }
+        }
 
         public void CallPlayerReady(int actorNumber, bool ready)
         {

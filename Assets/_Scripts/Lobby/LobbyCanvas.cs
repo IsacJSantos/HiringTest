@@ -1,9 +1,8 @@
-using BraveHunterGames.Utils;
-using TMPro;
+using HiringTest.Utils;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace BraveHunterGames
+namespace HiringTest
 {
     public class LobbyCanvas : BaseCanvas
     {
@@ -16,12 +15,14 @@ namespace BraveHunterGames
             base.Awake();
 
             Events.AllPlayersReady += OnAllPlayersReady;
+            Events.Disconnected += OnDisconnected;
         }
 
         protected override void OnDestroy()
         {
 
             Events.AllPlayersReady -= OnAllPlayersReady;
+            Events.Disconnected -= OnDisconnected;
             base.OnDestroy();
         }
 
@@ -44,7 +45,13 @@ namespace BraveHunterGames
        
         void ToggleStartGameButton(bool interactable)
         {
+            print("Toggle Start Game " + interactable);
             _startGameButton.interactable = interactable;
+        }
+
+        void OnDisconnected() 
+        {
+            _startGameButton.interactable = false;
         }
 
     }

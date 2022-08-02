@@ -1,8 +1,8 @@
 using Cinemachine;
 using UnityEngine;
-using BraveHunterGames.Utils;
+using HiringTest.Utils;
 
-namespace BraveHunterGames
+namespace HiringTest
 {
     public class GameManager : Singleton<GameManager>
     {

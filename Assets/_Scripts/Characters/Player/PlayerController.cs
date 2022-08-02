@@ -1,7 +1,7 @@
 using Photon.Pun;
 using UnityEngine;
 
-namespace BraveHunterGames
+namespace HiringTest
 {
     public class PlayerController : MonoBehaviour
     {

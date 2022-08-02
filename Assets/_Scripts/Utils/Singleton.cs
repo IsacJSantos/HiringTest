@@ -1,5 +1,5 @@
 using UnityEngine;
-namespace BraveHunterGames.Utils
+namespace HiringTest.Utils
 {
     public class Singleton<T> : MonoBehaviour
     {

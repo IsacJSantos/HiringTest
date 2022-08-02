@@ -1,16 +1,20 @@
-using BraveHunterGames.Utils;
+using HiringTest.Utils;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using TMPro;
 
-namespace BraveHunterGames
+namespace HiringTest
 {
     public class LobbyManager : MonoBehaviour
     {
         [SerializeField] string _playerPanelEntryRef; // Reference to find this object in Resources folder
         [SerializeField] Transform _playerListTrans;
-        
+        [SerializeField] TextMeshProUGUI _readyButtonText;
+
         bool _isReady;
+        const string READY_TEXT = "Ready";
+        const string UNREADY_TEXT = "Unready";
         List<PlayerPanelEntry> _playerPanels = new List<PlayerPanelEntry>();
 
         #region MonoBehaviour Callbacks
@@ -35,30 +39,36 @@ namespace BraveHunterGames
 
         public void StartGame()
         {
+            Events.HideCanvas?.Invoke(CanvasType.Lobby);
             Events.StartGame?.Invoke();
-            Events.HideMenu?.Invoke(MenuType.Lobby);
             NetworkManager.Instance.LoadScene(1);
         }
 
         public void Ready()
         {
-
             _isReady = !_isReady;
+            _readyButtonText.text = _isReady ? UNREADY_TEXT : READY_TEXT;
             NetworkManager.Instance.CallPlayerReady(NetworkManager.Instance.OwnActorNumber, _isReady);
         }
 
         public void LeaveRoom()
         {
             NetworkManager.Instance.LeaveRoom();
+
             Events.Logout?.Invoke();
-            Events.HideMenu?.Invoke(MenuType.Lobby);
+            Events.HideCanvas?.Invoke(CanvasType.Lobby);
+            Events.HideCanvas?.Invoke(CanvasType.Connecting);
+            Events.OpenCanvas?.Invoke(CanvasType.Login);
         }
 
 
         void OnConnect()
         {
             InitPlayerList();
-            Events.OpenMenu?.Invoke(MenuType.Lobby);
+
+            _isReady = false;
+            _readyButtonText.text = READY_TEXT;
+            Events.OpenCanvas?.Invoke(CanvasType.Lobby);
         }
 
         void OnPlayerEnter(int actorNumber, string nickName)

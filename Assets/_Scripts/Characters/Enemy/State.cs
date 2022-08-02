@@ -1,7 +1,7 @@
 using UnityEngine.AI;
 using UnityEngine;
 
-namespace BraveHunterGames
+namespace HiringTest
 {
     public class State
     {

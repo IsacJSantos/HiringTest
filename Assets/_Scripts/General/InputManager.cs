@@ -1,8 +1,8 @@
 using UnityEngine.InputSystem;
-using BraveHunterGames.Utils;
+using HiringTest.Utils;
 using UnityEngine;
 
-namespace BraveHunterGames 
+namespace HiringTest 
 {
     public class InputManager : Singleton<InputManager>
     {

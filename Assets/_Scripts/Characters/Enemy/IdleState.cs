@@ -1,8 +1,8 @@
 using UnityEngine.AI;
 using UnityEngine;
-using BraveHunterGames.Utils;
+using HiringTest.Utils;
 
-namespace BraveHunterGames
+namespace HiringTest
 {
     public class IdleState : State
     {

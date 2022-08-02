@@ -1,30 +1,33 @@
 using TMPro;
 using UnityEngine;
-using BraveHunterGames.Utils;
+using HiringTest.Utils;
 using Photon.Pun;
 using UnityEngine.UI;
 
-namespace BraveHunterGames
+namespace HiringTest
 {
-    public class LoginCanvas : MonoBehaviour
+    public class LoginCanvas : BaseCanvas
     {
         [SerializeField] TMP_InputField _inputField;
-        [SerializeField] Canvas _loginPanelCv;
-        [SerializeField] Canvas _connectingPanelCv;
 
         const string NICK_NAME_PREF_KEY = "nickName"; // The key of nick name's Player Pref
 
 
         #region MonoBehaviour Callbakcs
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             Events.Connected += OnConnected;
+            Events.ConnectFail += OnConnectFail;
         }
 
-        private void OnDestroy()
+        protected override void OnDestroy()
         {
             Events.Connected -= OnConnected;
+            Events.ConnectFail -= OnConnectFail;
+            base.OnDestroy();
         }
+
         private void Start()
         {
             string _nickName = string.Empty;
@@ -36,17 +39,17 @@ namespace BraveHunterGames
 
             PhotonNetwork.NickName = _nickName;
 
-            _loginPanelCv.enabled = true;
-            _connectingPanelCv.enabled = false;
+            ShowCanvas();
         }
         #endregion
 
 
         public void Login()
         {
-            Events.Login?.Invoke();
-            _loginPanelCv.enabled = false;
-            _connectingPanelCv.enabled = true;
+            NetworkManager.Instance.TryLogin(); // Try put the client online
+
+            Events.OpenCanvas(CanvasType.Connecting);
+            HideCanvas();
         }
 
         public void SavePlayerNickName(string value)
@@ -57,10 +60,17 @@ namespace BraveHunterGames
             PhotonNetwork.NickName = value;
         }
 
-        void OnConnected() 
+        void OnConnected()
         {
-          //  _connectingPanelCv.enabled = false;
+            Events.OpenCanvas?.Invoke(CanvasType.Lobby);
         }
+
+        void OnConnectFail()
+        {
+            ShowCanvas();
+        }
+
+
     }
 }
 

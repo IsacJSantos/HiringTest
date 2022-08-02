@@ -1,12 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
-namespace BraveHunterGames.Utils
+namespace HiringTest.Utils
 {
     [System.Serializable]
-    public enum MenuType { Lobby, Login, Hud };
+    public enum CanvasType { Lobby, Login, Hud, Connecting };
 
     [System.Serializable]
-    public enum TriggerAnimType { Idle, Walk, Run, Attack};
+    public enum TriggerAnimType { Idle, Walk, Run, Attack };
 }

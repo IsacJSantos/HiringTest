@@ -1,49 +1,56 @@
 using UnityEngine;
-using BraveHunterGames.Utils;
+using HiringTest.Utils;
 
-namespace BraveHunterGames
+namespace HiringTest
 {
     public abstract class BaseCanvas : MonoBehaviour
     {
-        [SerializeField] MenuType _menuType;
+        [SerializeField] CanvasType _menuType;
 
-        Canvas _canvas;
+        protected Canvas _canvas;
+        bool _isOpen;
 
         #region MonoBehaviour Callbacks
         protected virtual void Awake()
         {
             _canvas = GetComponent<Canvas>();
-            Events.OpenMenu += OnOpenMenu;
-            Events.HideMenu += OnHideMenu;
+            Events.OpenCanvas += OnOpenMenu;
+            Events.HideCanvas += OnHideMenu;
         }
 
         protected virtual void OnDestroy()
         {
-            Events.OpenMenu -= OnOpenMenu;
-            Events.HideMenu -= OnHideMenu;
+            Events.OpenCanvas -= OnOpenMenu;
+            Events.HideCanvas -= OnHideMenu;
         }
         #endregion
 
 
-        public virtual void OnOpenMenu(MenuType menuType)
+        public virtual void OnOpenMenu(CanvasType menuType)
         {
+            if (_isOpen) return;
+
             if (menuType == _menuType)
                 ShowCanvas();
         }
 
-        public virtual void OnHideMenu(MenuType menuType)
+        public virtual void OnHideMenu(CanvasType menuType)
         {
+            if (!_isOpen) return;
+
             if (menuType == _menuType)
                 HideCanvas();
         }
 
         public virtual void ShowCanvas()
         {
+            _isOpen = true;
             _canvas.enabled = true;
         }
 
         public virtual void HideCanvas()
         {
+            _isOpen = false;
             _canvas.enabled = false;
         }
     }

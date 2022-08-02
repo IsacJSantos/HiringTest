@@ -2,7 +2,7 @@
 namespace HiringTest.Utils
 {
     [System.Serializable]
-    public enum CanvasType { Lobby, Login, Pause, Connecting };
+    public enum CanvasType { Lobby, Login, Pause, Connecting, Victory, Lose };
 
     [System.Serializable]
     public enum TriggerAnimType { Idle, Walk, Run, Attack };

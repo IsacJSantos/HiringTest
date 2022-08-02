@@ -20,11 +20,6 @@ namespace HiringTest
             }
         }
         #endregion
-        public void BackToMainMenu()
-        {
-            NetworkManager.Instance.LeaveGame();
-            SceneManager.LoadScene((int)SceneType.Menu);
-        }
     }
 
 }

@@ -35,7 +35,11 @@ namespace HiringTest.Utils
         public static Action<TriggerAnimType> SetEnemyTriggerAnim;
         #endregion
 
+        #region Gameplay
+        public static Action BackToMainMenu;
+        #endregion
+
     }
-   
+
 }
 

@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 635746204}
   - component: {fileID: 635746205}
   m_Layer: 0
-  m_Name: Startup
+  m_Name: SceneLoader
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -167,6 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93e2dd1732d5a2f4e8a0411fad87159d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _dontDestroy: 1
 --- !u!1001 &5664264147544991220
 PrefabInstance:
   m_ObjectHideFlags: 0

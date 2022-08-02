@@ -97,6 +97,11 @@ namespace HiringTest
             PhotonNetwork.LoadLevel((int)sceneType);
         }
 
+        public void SetRoomVisibility(bool open) 
+        {
+            PhotonNetwork.CurrentRoom.IsOpen = open;
+        }
+
         public GameObject InstantiateNetworkObject(string prefabName, Vector3 pos)
         {
             return PhotonNetwork.Instantiate(prefabName, pos, Quaternion.identity);

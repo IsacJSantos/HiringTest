@@ -223,6 +223,7 @@ MonoBehaviour:
   _vCam: {fileID: 0}
   _playerPrefabRef: Characters/Player/PlayerPrefab
   _enemyPrefabRef: Characters/Enemy/EnemyPrefab
+  _ambienceMusicClip: {fileID: 8300000, guid: 1cf749f4d90546344862cef5f867afa5, type: 3}
 --- !u!1001 &9164929719474028920
 PrefabInstance:
   m_ObjectHideFlags: 0

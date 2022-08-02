@@ -140,6 +140,8 @@ namespace HiringTest
 
         void OnStartGameLoadingScreen() //Dims the screen to load the gameplay level
         {
+            BGMManager.Instance.StopMusic();
+
             _loadLevelScreemImg.DOFade(1, 0.6f).OnComplete(() =>
             {
                 if (NetworkManager.Instance.IsMasterClient)

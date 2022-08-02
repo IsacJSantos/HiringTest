@@ -11,7 +11,7 @@ namespace HiringTest
         public PursueState(GameObject npc, NavMeshAgent agent, Animator anim, LayerMask viewObstacleLayers, Transform target)
             : base(npc, agent, anim, viewObstacleLayers)
         {
-            StateName = STATE.PURSUE;
+            StateName = StateType.PURSUE;
             _target = target;
         }
 
@@ -29,12 +29,12 @@ namespace HiringTest
             if (LoseTarget()) // Go to Patrol State
             {
                 _nextState = new PatrolState(_npc, _agent, _anim, _viewObstacleLayers);
-                _stage = EVENT.EXIT;
+                _stage = StateEventType.EXIT;
             }
             else if (IsInDestination())// Go to Attack State
             {
                 _nextState = new AttackState(_npc, _agent, _anim, _viewObstacleLayers, _target);
-                _stage = EVENT.EXIT;
+                _stage = StateEventType.EXIT;
             }
             else
                 _agent.SetDestination(_target.transform.position);

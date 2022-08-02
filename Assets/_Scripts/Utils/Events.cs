@@ -33,6 +33,7 @@ namespace HiringTest.Utils
 
         #region Enemy
         public static Action<TriggerAnimType> SetEnemyTriggerAnim;
+        public static Action<StateType> EnemyInitState;
         #endregion
 
         #region Gameplay

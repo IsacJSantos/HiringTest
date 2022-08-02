@@ -1,22 +1,13 @@
 using UnityEngine.AI;
 using UnityEngine;
+using HiringTest.Utils;
 
 namespace HiringTest
 {
     public class State
     {
-        public enum STATE
-        {
-            IDLE, PATROL, PURSUE, ATTACK
-        }
-
-        public enum EVENT
-        {
-            ENTER, UPDATE, EXIT
-        }
-
-        public STATE StateName;
-        protected EVENT _stage;
+        public StateType StateName;
+        protected StateEventType _stage;
         protected GameObject _npc;
         protected Animator _anim;
         protected State _nextState;
@@ -28,28 +19,35 @@ namespace HiringTest
         float _viewDistance = 10;
         float _viewAngle = 30;
         int _targetLayerMask = 3;
+        float _viewDelay = 0.5f; // Frequency at which the enemy's vision is updated
         RaycastHit _rayHit;
+
+        float _time;
 
         public State(GameObject npc, NavMeshAgent agent, Animator anim, LayerMask viewObstacleLayers)
         {
-            _stage = EVENT.ENTER;
+            _stage = StateEventType.ENTER;
             _npc = npc;
             _anim = anim;
             _agent = agent;
             _viewObstacleLayers = viewObstacleLayers;
         }
 
-        public virtual void Enter() { _stage = EVENT.UPDATE; }
+        public virtual void Enter()
+        {
+            _stage = StateEventType.UPDATE;
+            NetworkManager.Instance.CallEnemyInitState(StateName);
+        }
         public virtual void Update() { }
-        public virtual void Exit() { _stage = EVENT.EXIT; }
+        public virtual void Exit() { _stage = StateEventType.EXIT; }
 
         public State Process()
         {
-            if (_stage == EVENT.ENTER)
+            if (_stage == StateEventType.ENTER)
                 Enter();
-            else if (_stage == EVENT.UPDATE)
+            else if (_stage == StateEventType.UPDATE)
                 Update();
-            else if (_stage == EVENT.EXIT)
+            else if (_stage == StateEventType.EXIT)
             {
                 Exit();
                 return _nextState;
@@ -60,6 +58,10 @@ namespace HiringTest
 
         public bool IsLookingAtTarget()
         {
+            if (Time.time < _time) return false;
+
+            _time = Time.time + _viewDelay;
+
             Transform targetTrans = GetTargetInArea();
 
             if (targetTrans == null) return false;
@@ -82,7 +84,7 @@ namespace HiringTest
             return Vector3.Distance(_npc.transform.position, _agent.destination) <= _agent.stoppingDistance;
         }
 
-        public bool LoseTarget() 
+        public bool LoseTarget()
         {
             return Vector3.Distance(_npc.transform.position, _target.position) > _viewDistance;
         }
@@ -117,7 +119,6 @@ namespace HiringTest
             float distance = Vector3.Distance(targetPos, _npc.transform.position);
             if (Physics.Raycast(_npc.transform.position, direction, out _rayHit, distance, _viewObstacleLayers))
             {
-                Debug.Log(_rayHit.collider.name);
                 return true;
             }
             return false;

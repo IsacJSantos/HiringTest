@@ -10,7 +10,7 @@ namespace HiringTest
         public PatrolState(GameObject npc, NavMeshAgent agent, Animator anim, LayerMask viewObstacleLayers)
             : base(npc, agent, anim, viewObstacleLayers)
         {
-            StateName = STATE.PATROL;
+            StateName = StateType.PATROL;
         }
 
         public override void Enter()
@@ -27,12 +27,12 @@ namespace HiringTest
             if (IsLookingAtTarget()) // Go to Pursue State
             {
                 _nextState = new PursueState(_npc, _agent, _anim, _viewObstacleLayers, _target);
-                _stage = EVENT.EXIT;
+                _stage = StateEventType.EXIT;
             }
             else if (Random.Range(0, 2000) <= 1)// Go to Idle State
             {
                 _nextState = new IdleState(_npc, _agent, _anim, _viewObstacleLayers);
-                _stage = EVENT.EXIT;
+                _stage = StateEventType.EXIT;
             }
             else if (IsInDestination())
             {

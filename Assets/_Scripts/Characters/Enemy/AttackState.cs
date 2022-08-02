@@ -10,7 +10,7 @@ namespace HiringTest
         public AttackState(GameObject npc, NavMeshAgent agent, Animator anim, LayerMask viewObstacleLayers, Transform playerTransform)
             : base(npc, agent, anim, viewObstacleLayers)
         {
-            StateName = STATE.ATTACK;
+            StateName = StateType.ATTACK;
             _playerTransform = playerTransform;
         }
 
@@ -23,7 +23,7 @@ namespace HiringTest
         public override void Update()
         {
             _nextState = new IdleState(_npc, _agent, _anim, _viewObstacleLayers);
-            _stage = EVENT.EXIT;
+            _stage = StateEventType.EXIT;
 
             base.Update();
         }

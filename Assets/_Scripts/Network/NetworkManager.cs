@@ -97,7 +97,7 @@ namespace HiringTest
             PhotonNetwork.LoadLevel((int)sceneType);
         }
 
-        public void SetRoomVisibility(bool open) 
+        public void SetRoomVisibility(bool open)
         {
             PhotonNetwork.CurrentRoom.IsOpen = open;
         }
@@ -109,7 +109,7 @@ namespace HiringTest
 
         #region Lobby Methods
 
-        public void TryLogin() 
+        public void TryLogin()
         {
             if (PhotonNetwork.IsConnected)
             {
@@ -127,7 +127,7 @@ namespace HiringTest
             this.photonView.RPC("SetPlayerReady", RpcTarget.AllBuffered, actorNumber, ready);
         }
 
-        public void CallStartGameLoadScreen() 
+        public void CallStartGameLoadScreen()
         {
             this.photonView.RPC("InitLoadLevelScreen", RpcTarget.AllBuffered);
         }
@@ -152,10 +152,21 @@ namespace HiringTest
             this.photonView.RPC("SetEnemyTriggerAnim", RpcTarget.All, (int)animType);
         }
 
+        public void CallEnemyInitState(StateType enemyState)
+        {
+            this.photonView.RPC("SetEnemyInitState", RpcTarget.All, (int)enemyState);
+        }
+
         [PunRPC]
         void SetEnemyTriggerAnim(int anim)
         {
             Events.SetEnemyTriggerAnim?.Invoke((TriggerAnimType)anim);
+        }
+
+        [PunRPC]
+        void SetEnemyInitState(int state)
+        {
+            Events.EnemyInitState?.Invoke((StateType)state);
         }
 
         #endregion

@@ -92,9 +92,14 @@ namespace HiringTest
             Events.Disconnected?.Invoke();
         }
 
-        public void LoadScene(int sceneIndex)
+        public void LoadScene(SceneType sceneType)
         {
-            PhotonNetwork.LoadLevel(sceneIndex);
+            PhotonNetwork.LoadLevel((int)sceneType);
+        }
+
+        public GameObject InstantiateNetworkObject(string prefabName, Vector3 pos)
+        {
+            return PhotonNetwork.Instantiate(prefabName, pos, Quaternion.identity);
         }
 
         #region Lobby Methods
@@ -117,16 +122,21 @@ namespace HiringTest
             this.photonView.RPC("SetPlayerReady", RpcTarget.AllBuffered, actorNumber, ready);
         }
 
-        public GameObject InstantiateNetworkObject(string prefabName, Vector3 pos)
+        public void CallStartGameLoadScreen() 
         {
-           return PhotonNetwork.Instantiate(prefabName, pos, Quaternion.identity);
+            this.photonView.RPC("InitLoadLevelScreen", RpcTarget.AllBuffered);
         }
 
-
         [PunRPC]
-        void SetPlayerReady(int actorNumber, bool ready)
+        void SetPlayerReady(int actorNumber, bool ready) // Set the Ready/Unready player on lobby by RPC
         {
             Events.SetPlayerReady?.Invoke(actorNumber, ready);
+        }
+
+        [PunRPC]
+        void InitLoadLevelScreen() // Dims the screen before load a level
+        {
+            Events.StartGameLoadingScreen?.Invoke();
         }
 
         #endregion

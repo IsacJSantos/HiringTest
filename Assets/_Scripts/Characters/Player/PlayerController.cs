@@ -14,6 +14,7 @@ namespace HiringTest
         [SerializeField] float _runSpeed;
         [SerializeField] Transform _cameraTransform;
         [SerializeField] Transform _headTransform;
+        [SerializeField] SkinnedMeshRenderer _meshRenderer;
 
         int _actorNumber;
         float _xValue;
@@ -23,6 +24,7 @@ namespace HiringTest
         float _acceleration = 1.8f;
         InputManager _inputManager;
         Transform _transform;
+       
 
         PhotonView _photonView;
 
@@ -42,6 +44,7 @@ namespace HiringTest
         {
             if (_photonView.IsMine)
             {
+                _meshRenderer.enabled = false;
                 SetAnimation();
                 RotatePlayer();
 
@@ -50,6 +53,8 @@ namespace HiringTest
                 _xValue = _inputManager.GetPlayerMoveX().x;
                 _yValue = _inputManager.GetPlayerMoveY().y;
             }
+            else
+                _meshRenderer.enabled = true;
 
         }
 

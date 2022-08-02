@@ -27,6 +27,8 @@ namespace HiringTest.Utils
         public static Action Logout;
 
         public static Action<bool> AllPlayersReady;
+
+        public static Action StartGameLoadingScreen;
         #endregion
 
         #region Enemy

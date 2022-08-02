@@ -40,7 +40,7 @@ namespace HiringTest
         }
 
         public virtual void Enter() { _stage = EVENT.UPDATE; }
-        public virtual void Update() { Debug.Log("Process State: " + StateName);/*Temp Log*/ }
+        public virtual void Update() { }
         public virtual void Exit() { _stage = EVENT.EXIT; }
 
         public State Process()

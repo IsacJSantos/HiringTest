@@ -46,7 +46,7 @@ namespace HiringTest
         {
             if (actorNumber == _actorNumber)
             {
-                gameObject.SetActive(false);
+                Destroy(gameObject);
             }
         }
 
@@ -65,7 +65,7 @@ namespace HiringTest
 
         void OnLogout() 
         {
-            gameObject?.SetActive(false);
+           Destroy(gameObject);
         }
     }
 }

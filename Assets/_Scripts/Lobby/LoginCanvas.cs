@@ -17,13 +17,11 @@ namespace HiringTest
         protected override void Awake()
         {
             base.Awake();
-            Events.Connected += OnConnected;
             Events.ConnectFail += OnConnectFail;
         }
 
         protected override void OnDestroy()
         {
-            Events.Connected -= OnConnected;
             Events.ConnectFail -= OnConnectFail;
             base.OnDestroy();
         }
@@ -48,7 +46,7 @@ namespace HiringTest
         {
             NetworkManager.Instance.TryLogin(); // Try put the client online
 
-            Events.OpenCanvas(CanvasType.Connecting);
+            Events.OpenCanvas?.Invoke(CanvasType.Connecting);
             HideCanvas();
         }
 
@@ -60,10 +58,6 @@ namespace HiringTest
             PhotonNetwork.NickName = value;
         }
 
-        void OnConnected()
-        {
-            Events.OpenCanvas?.Invoke(CanvasType.Lobby);
-        }
 
         void OnConnectFail()
         {

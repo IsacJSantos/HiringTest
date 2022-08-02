@@ -83,6 +83,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -3321919801592875672, guid: 653b1b932e5e52048ad66272dba4412d, type: 3}
   m_PrefabInstance: {fileID: 4703993197860893786}
   m_PrefabAsset: {fileID: 0}
+--- !u!137 &2806301271475229998 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -1750197354950549132, guid: 653b1b932e5e52048ad66272dba4412d, type: 3}
+  m_PrefabInstance: {fileID: 4703993197860893786}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &5586320844542904587 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 653b1b932e5e52048ad66272dba4412d, type: 3}
@@ -111,7 +116,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5586320844542904587}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 9781948f6229abc4aba401f8db44d7a5, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.21
@@ -160,6 +165,7 @@ MonoBehaviour:
   _runSpeed: 230
   _cameraTransform: {fileID: 0}
   _headTransform: {fileID: 1198480243193692466}
+  _meshRenderer: {fileID: 2806301271475229998}
 --- !u!114 &6486834930968134536
 MonoBehaviour:
   m_ObjectHideFlags: 0

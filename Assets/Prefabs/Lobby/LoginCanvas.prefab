@@ -371,7 +371,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2336671245655166341}
-  - component: {fileID: 2336671245655166340}
   m_Layer: 5
   m_Name: LoginPanel
   m_TagString: Untagged
@@ -401,27 +400,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!223 &2336671245655166340
-Canvas:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2336671245655166330}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_RenderMode: 2
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
-  m_PixelPerfect: 0
-  m_ReceivesEvents: 1
-  m_OverrideSorting: 0
-  m_OverridePixelPerfect: 0
-  m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
-  m_TargetDisplay: 0
 --- !u!1 &2336671245726814799
 GameObject:
   m_ObjectHideFlags: 0
@@ -953,6 +931,7 @@ GameObject:
   - component: {fileID: 2336671246843768789}
   - component: {fileID: 2336671246843768778}
   - component: {fileID: 2336671246843768791}
+  - component: {fileID: 1962336170249479565}
   m_Layer: 5
   m_Name: LoginCanvas
   m_TagString: Untagged
@@ -988,7 +967,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2336671246843768776}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -1038,7 +1017,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _menuType: 1
+  _fadeDuration: 0.3
   _inputField: {fileID: 2336671246507458755}
-  _loginPanelCv: {fileID: 2336671245655166340}
-  _connectingPanelCv: {fileID: 0}
-  _connectingText: {fileID: 0}
+--- !u!225 &1962336170249479565
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2336671246843768776}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0

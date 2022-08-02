@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using TMPro;
+using UnityEngine.UI;
+using DG.Tweening;
 
 namespace HiringTest
 {
@@ -11,6 +13,7 @@ namespace HiringTest
         [SerializeField] string _playerPanelEntryRef; // Reference to find this object in Resources folder
         [SerializeField] Transform _playerListTrans;
         [SerializeField] TextMeshProUGUI _readyButtonText;
+        [SerializeField] Image _loadLevelScreemImg;
 
         bool _isReady;
         const string READY_TEXT = "Ready";
@@ -24,6 +27,7 @@ namespace HiringTest
             Events.PlayerReady += OnPlayerReady;
             Events.PlayerEnterRoom += OnPlayerEnter;
             Events.PlayerLeftRoom += OnPlayerLeft;
+            Events.StartGameLoadingScreen += OnStartGameLoadingScreen;
 
         }
 
@@ -33,15 +37,15 @@ namespace HiringTest
             Events.PlayerReady -= OnPlayerReady;
             Events.PlayerEnterRoom -= OnPlayerEnter;
             Events.PlayerLeftRoom -= OnPlayerLeft;
+            Events.StartGameLoadingScreen -= OnStartGameLoadingScreen;
         }
 
         #endregion
 
         public void StartGame()
         {
-            Events.HideCanvas?.Invoke(CanvasType.Lobby);
             Events.StartGame?.Invoke();
-            NetworkManager.Instance.LoadScene(1);
+            NetworkManager.Instance.CallStartGameLoadScreen();
         }
 
         public void Ready()
@@ -53,7 +57,7 @@ namespace HiringTest
 
         public void LeaveRoom()
         {
-            NetworkManager.Instance.LeaveRoom();
+            NetworkManager.Instance.LeaveRoom(); // Put the client offline
 
             Events.Logout?.Invoke();
             Events.HideCanvas?.Invoke(CanvasType.Lobby);
@@ -134,6 +138,14 @@ namespace HiringTest
             return playerPanel;
         }
 
+        void OnStartGameLoadingScreen() //Dims the screen to load the gameplay level
+        {
+            _loadLevelScreemImg.DOFade(1, 0.6f).OnComplete(() =>
+            {
+                if (NetworkManager.Instance.IsMasterClient)
+                    NetworkManager.Instance.LoadScene(SceneType.Gameplay);
+            });
+        }
 
     }
 }

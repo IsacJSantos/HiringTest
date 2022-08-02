@@ -6,48 +6,58 @@ namespace HiringTest
 {
     public class InputManager : Singleton<InputManager>
     {
-        Input _playerControls;
+        Input _inputControll;
 
         #region Monobehaviour Callbacks
         protected override void Awake()
         {
             base.Awake();
-            _playerControls = new Input();
+            _inputControll = new Input();
         }
         private void OnEnable()
         {
-            _playerControls.Enable();
+            _inputControll.Enable();
         }
 
         private void OnDisable()
         {
-            _playerControls.Disable();
+            _inputControll.Disable();
         }
         #endregion
 
-        public Vector2 GetPlayerMoveX() 
+        #region Player Controller
+        public Vector2 GetPlayerMoveX()
         {
-            return _playerControls.PlayerControl.XMove.ReadValue<Vector2>();
+            return _inputControll.PlayerControl.XMove.ReadValue<Vector2>();
         }
 
         public Vector2 GetPlayerMoveY()
         {
-            return _playerControls.PlayerControl.YMove.ReadValue<Vector2>();
+            return _inputControll.PlayerControl.YMove.ReadValue<Vector2>();
         }
 
-        public Vector2 GetMouseDelta() 
+        public Vector2 GetMouseDelta()
         {
-            return _playerControls.PlayerControl.Look.ReadValue<Vector2>();
+            return _inputControll.PlayerControl.Look.ReadValue<Vector2>();
         }
-        public bool PlayerInteractThisFrame() 
+        public bool PlayerInteractThisFrame()
         {
-            return _playerControls.PlayerControl.Interact.triggered;
+            return _inputControll.PlayerControl.Interact.triggered;
         }
 
         public bool PlayerRunThisFrame()
         {
-            return _playerControls.PlayerControl.Run.triggered;
+            return _inputControll.PlayerControl.Run.triggered;
         }
+        #endregion
+
+        #region PauseMenu 
+        public bool PressedPauseThisFrame() 
+        {
+            return _inputControll.UI.PauseMenu.triggered;
+        }
+        #endregion
+
     }
 }
 

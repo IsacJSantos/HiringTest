@@ -57,7 +57,7 @@ namespace HiringTest
 
         public void LeaveRoom()
         {
-            NetworkManager.Instance.LeaveRoom(); // Put the client offline
+            NetworkManager.Instance.LeaveGame(); // Put the client offline
 
             Events.Logout?.Invoke();
             Events.HideCanvas?.Invoke(CanvasType.Lobby);

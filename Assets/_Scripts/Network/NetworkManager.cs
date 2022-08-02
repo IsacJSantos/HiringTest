@@ -86,7 +86,7 @@ namespace HiringTest
         }
         #endregion
 
-        public void LeaveRoom()
+        public void LeaveGame()
         {
             PhotonNetwork.Disconnect();
             Events.Disconnected?.Invoke();

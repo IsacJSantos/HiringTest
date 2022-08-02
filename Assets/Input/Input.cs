@@ -86,28 +86,6 @@ public partial class @Input : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""3479bbd3-553d-4d9d-b37a-8fa90d5d3ee8"",
-                    ""path"": ""<XInputController>/buttonSouth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Interact"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""a32822a4-c46c-4a9b-aa72-d6a4a1456e3a"",
-                    ""path"": ""<DualShockGamepad>/buttonSouth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Interact"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
                     ""name"": ""adkeys"",
                     ""id"": ""c47ea8f5-1010-4170-ad88-a5d722fb85be"",
                     ""path"": ""2DVector"",
@@ -139,17 +117,6 @@ public partial class @Input : IInputActionCollection2, IDisposable
                     ""action"": ""XMove"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""0145a0d4-027f-4459-9962-1c9fde44f305"",
-                    ""path"": ""<Gamepad>/leftStick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""XMove"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 },
                 {
                     ""name"": ""wskeys"",
@@ -207,6 +174,34 @@ public partial class @Input : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""UI"",
+            ""id"": ""85065f9d-5480-4801-9aa2-89b50bf7f698"",
+            ""actions"": [
+                {
+                    ""name"": ""PauseMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""162cb0f2-752e-463e-914a-83cd2521f795"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""40ce19fb-9fdb-46a7-b498-2b40de7069cc"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keybord and Mouse"",
+                    ""action"": ""PauseMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -225,17 +220,6 @@ public partial class @Input : IInputActionCollection2, IDisposable
                     ""isOR"": false
                 }
             ]
-        },
-        {
-            ""name"": ""Gamepad"",
-            ""bindingGroup"": ""Gamepad"",
-            ""devices"": [
-                {
-                    ""devicePath"": ""<Gamepad>"",
-                    ""isOptional"": false,
-                    ""isOR"": false
-                }
-            ]
         }
     ]
 }");
@@ -246,6 +230,9 @@ public partial class @Input : IInputActionCollection2, IDisposable
         m_PlayerControl_YMove = m_PlayerControl.FindAction("YMove", throwIfNotFound: true);
         m_PlayerControl_Run = m_PlayerControl.FindAction("Run", throwIfNotFound: true);
         m_PlayerControl_Look = m_PlayerControl.FindAction("Look", throwIfNotFound: true);
+        // UI
+        m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
+        m_UI_PauseMenu = m_UI.FindAction("PauseMenu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -366,6 +353,39 @@ public partial class @Input : IInputActionCollection2, IDisposable
         }
     }
     public PlayerControlActions @PlayerControl => new PlayerControlActions(this);
+
+    // UI
+    private readonly InputActionMap m_UI;
+    private IUIActions m_UIActionsCallbackInterface;
+    private readonly InputAction m_UI_PauseMenu;
+    public struct UIActions
+    {
+        private @Input m_Wrapper;
+        public UIActions(@Input wrapper) { m_Wrapper = wrapper; }
+        public InputAction @PauseMenu => m_Wrapper.m_UI_PauseMenu;
+        public InputActionMap Get() { return m_Wrapper.m_UI; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
+        public void SetCallbacks(IUIActions instance)
+        {
+            if (m_Wrapper.m_UIActionsCallbackInterface != null)
+            {
+                @PauseMenu.started -= m_Wrapper.m_UIActionsCallbackInterface.OnPauseMenu;
+                @PauseMenu.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnPauseMenu;
+                @PauseMenu.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnPauseMenu;
+            }
+            m_Wrapper.m_UIActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @PauseMenu.started += instance.OnPauseMenu;
+                @PauseMenu.performed += instance.OnPauseMenu;
+                @PauseMenu.canceled += instance.OnPauseMenu;
+            }
+        }
+    }
+    public UIActions @UI => new UIActions(this);
     private int m_KeybordandMouseSchemeIndex = -1;
     public InputControlScheme KeybordandMouseScheme
     {
@@ -375,15 +395,6 @@ public partial class @Input : IInputActionCollection2, IDisposable
             return asset.controlSchemes[m_KeybordandMouseSchemeIndex];
         }
     }
-    private int m_GamepadSchemeIndex = -1;
-    public InputControlScheme GamepadScheme
-    {
-        get
-        {
-            if (m_GamepadSchemeIndex == -1) m_GamepadSchemeIndex = asset.FindControlSchemeIndex("Gamepad");
-            return asset.controlSchemes[m_GamepadSchemeIndex];
-        }
-    }
     public interface IPlayerControlActions
     {
         void OnInteract(InputAction.CallbackContext context);
@@ -391,5 +402,9 @@ public partial class @Input : IInputActionCollection2, IDisposable
         void OnYMove(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
+    }
+    public interface IUIActions
+    {
+        void OnPauseMenu(InputAction.CallbackContext context);
     }
 }

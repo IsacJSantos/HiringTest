@@ -10,7 +10,7 @@ namespace HiringTest
     public abstract class BaseCanvas : MonoBehaviour
     {
         [SerializeField] CanvasType _menuType;
-        [SerializeField] float _fadeDuration = 0.3f;
+        [SerializeField] protected float _fadeDuration = 0.3f;
 
         protected Canvas _canvas;
         protected CanvasGroup _canvasGroup;

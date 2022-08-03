@@ -33,10 +33,6 @@ namespace HiringTest
         {
             _transform = GetComponent<Transform>();
             _photonView = GetComponent<PhotonView>();
-        }
-
-        private void Start()
-        {
             _inputManager = InputManager.Instance;
         }
 

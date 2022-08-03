@@ -147,6 +147,7 @@ namespace HiringTest
         #endregion
 
         #region GamePlay Methods
+
         public void CallEnemyTriggerAnim(TriggerAnimType animType)
         {
             this.photonView.RPC("SetEnemyTriggerAnim", RpcTarget.All, (int)animType);
@@ -155,6 +156,11 @@ namespace HiringTest
         public void CallEnemyInitState(StateType enemyState)
         {
             this.photonView.RPC("SetEnemyInitState", RpcTarget.All, (int)enemyState);
+        }
+
+        public void CallPlayerCaptured(int actorNumber) // When a player is captured by the enemy
+        {
+            this.photonView.RPC("PlayerCaptured", RpcTarget.All, actorNumber);
         }
 
         [PunRPC]
@@ -167,6 +173,12 @@ namespace HiringTest
         void SetEnemyInitState(int state)
         {
             Events.EnemyInitState?.Invoke((StateType)state);
+        }
+
+        [PunRPC]
+        void PlayerCaptured(int actorNumber)
+        {
+            Events.PlayerCaptured?.Invoke(actorNumber);
         }
 
         #endregion

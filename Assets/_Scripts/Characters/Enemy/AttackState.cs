@@ -6,20 +6,21 @@ namespace HiringTest
 {
     public class AttackState : State
     {
-        Transform _playerTransform;
-        float _attackDelay = 3f;
+        float _attackDelay = 3.5f;
         float _time;
+        NetworkManager _networkManager = NetworkManager.Instance;
+
         public AttackState(GameObject npc, NavMeshAgent agent, Animator anim, LayerMask viewObstacleLayers, Transform playerTransform)
             : base(npc, agent, anim, viewObstacleLayers)
         {
             StateName = StateType.ATTACK;
-            _playerTransform = playerTransform;
+            _networkManager.CallPlayerCaptured(playerTransform.GetComponent<PlayerController>().ActorNumber);
         }
 
         public override void Enter()
         {
             _time = Time.time + _attackDelay;
-            NetworkManager.Instance.CallEnemyTriggerAnim(TriggerAnimType.Attack);
+            _networkManager.CallEnemyTriggerAnim(TriggerAnimType.Attack);
             base.Enter();
         }
 

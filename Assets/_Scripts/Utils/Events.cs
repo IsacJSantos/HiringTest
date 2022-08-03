@@ -36,6 +36,10 @@ namespace HiringTest.Utils
         public static Action<StateType> EnemyInitState;
         #endregion
 
+        #region Player
+        public static Action<int> PlayerCaptured;
+        #endregion
+
         #region Gameplay
         public static Action BackToMainMenu;
         #endregion

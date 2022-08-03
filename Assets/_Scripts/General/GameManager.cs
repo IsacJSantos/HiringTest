@@ -15,9 +15,12 @@ namespace HiringTest
         [SerializeField] string _playerPrefabRef;
         [SerializeField] string _enemyPrefabRef;
 
+        NetworkManager _networkManager;
+
         #region MonoBehaviour Callbacks
         private void Start()
         {
+            _networkManager = NetworkManager.Instance;
             SpawnEnemy();
             SpawnPlayer();
         }
@@ -32,19 +35,21 @@ namespace HiringTest
 
         void SpawnEnemy() 
         {
-            if (NetworkManager.Instance.IsMasterClient)
-                NetworkManager.Instance.InstantiateNetworkObject(_enemyPrefabRef, _enemyCheckPoints[0].position);
+            if (_networkManager.IsMasterClient)
+                _networkManager.InstantiateNetworkObject(_enemyPrefabRef, _enemyCheckPoints[0].position);
         }
+
         void SpawnPlayer() 
         {
-            Vector3 playerSpawnPos = _playerSpawnPoints[NetworkManager.Instance.OwnActorNumber - 1].position;
-            PlayerController playerController = NetworkManager.Instance.InstantiateNetworkObject(_playerPrefabRef, playerSpawnPos).GetComponent<PlayerController>();
+            Vector3 playerSpawnPos = _playerSpawnPoints[_networkManager.OwnActorNumber - 1].position;
+            PlayerController playerController = _networkManager.InstantiateNetworkObject(_playerPrefabRef, playerSpawnPos).GetComponent<PlayerController>();
             if (playerController != null) 
             {
                 _vCam.Follow = playerController.HeadTransform;
-                playerController.Init(_camTransform, NetworkManager.Instance.OwnActorNumber);
+                playerController.Init(_camTransform, _networkManager.OwnActorNumber);
             }
         }
+
     }
 }
 

@@ -38,14 +38,14 @@ namespace HiringTest.Utils
 
         #region Player
         public static Action<int> PlayerCaptured;
-
+        public static Action<int> PlayerEscaped;
+        public static Action<int> PlayerLose;
         public static Action PlayerInteracted;
         #endregion
 
         #region Gameplay
         public static Action BackToMainMenu;
         public static Action OpenExitDoor;
-        public static Action<int> PlayerEscaped;
         #endregion
 
     }

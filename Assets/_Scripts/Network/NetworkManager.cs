@@ -107,7 +107,7 @@ namespace HiringTest
         {
             return PhotonNetwork.Instantiate(prefabName, pos, Quaternion.identity);
         }
-
+        
         #endregion
 
         #region Lobby Methods
@@ -176,6 +176,11 @@ namespace HiringTest
             this.photonView.RPC("PlayerEscaped", RpcTarget.All, actorNumber);
         }
 
+        public void CallPlayerLoseRPC(int actorNumber)
+        {
+            this.photonView.RPC("PlayerLose", RpcTarget.All, actorNumber);
+        }
+
         [PunRPC]
         void SetEnemyTriggerAnim(int anim)
         {
@@ -192,6 +197,12 @@ namespace HiringTest
         void PlayerCaptured(int actorNumber)
         {
             Events.PlayerCaptured?.Invoke(actorNumber);
+        }
+
+        [PunRPC]
+        void PlayerLose(int actorNumber)
+        {
+            Events.PlayerLose?.Invoke(actorNumber);
         }
 
         [PunRPC]

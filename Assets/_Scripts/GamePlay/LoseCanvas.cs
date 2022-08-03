@@ -9,17 +9,17 @@ namespace HiringTest
         protected override void Awake()
         {
             base.Awake();
-            Events.PlayerCaptured += OnPlayerCaptured;
+            Events.PlayerLose += OnPlayerLose;
         }
 
         protected override void OnDestroy()
         {
-            Events.PlayerCaptured -= OnPlayerCaptured;
+            Events.PlayerLose -= OnPlayerLose;
             base.OnDestroy();
         }
         #endregion
 
-        void OnPlayerCaptured(int actorNumber)
+        void OnPlayerLose(int actorNumber)
         {
             if (NetworkManager.Instance.OwnActorNumber == actorNumber)
             {

@@ -8,6 +8,7 @@ namespace HiringTest
         [SerializeField] Camera _cam;
         [SerializeField] float _maxDistance = 5f;
         [SerializeField] LayerMask _visibleLayers;
+        [SerializeField] /*PlayerManager*/ PlayerController _playerController;
 
         IInteractable _interactable;
         InputManager _inputManager;
@@ -17,20 +18,20 @@ namespace HiringTest
 
         Transform _currentTransform; // Current object captured by the ray
 
+        bool _isEnable;
         #region MonoBehaviour Callbacks
 
-        private void Start()
-        {
-            _inputManager = InputManager.Instance;
-            _screenPoint = new Vector3(_cam.pixelRect.width / 2, _cam.pixelRect.width / 2, _cam.nearClipPlane); //Temp
-        }
         private void Update()
         {
+            if (!_isEnable) return;
+
             if (_inputManager.PlayerInteractThisFrame()) Interact();
         }
 
         private void LateUpdate()
         {
+            if (!_isEnable) return;
+
             _ray = _cam.ScreenPointToRay(_screenPoint);
             if (Physics.Raycast(_ray, out _hit, _maxDistance, _visibleLayers))
             {
@@ -54,6 +55,8 @@ namespace HiringTest
         {
             _cam = cam;
             _screenPoint = new Vector3(_cam.pixelRect.width / 2, _cam.pixelRect.width / 2, _cam.nearClipPlane);
+            _inputManager = InputManager.Instance;
+            _isEnable = true;
         }
 
         void Interact()

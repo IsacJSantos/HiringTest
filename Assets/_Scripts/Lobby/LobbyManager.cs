@@ -18,6 +18,7 @@ namespace HiringTest
         bool _isReady;
         const string READY_TEXT = "Ready";
         const string UNREADY_TEXT = "Unready";
+        NetworkManager _networkManager;
         List<PlayerPanelEntry> _playerPanels = new List<PlayerPanelEntry>();
 
         #region MonoBehaviour Callbacks
@@ -28,7 +29,7 @@ namespace HiringTest
             Events.PlayerEnterRoom += OnPlayerEnter;
             Events.PlayerLeftRoom += OnPlayerLeft;
             Events.StartGameLoadingScreen += OnStartGameLoadingScreen;
-
+            _networkManager = NetworkManager.Instance;
         }
 
         private void OnDestroy()
@@ -45,19 +46,20 @@ namespace HiringTest
         public void StartGame()
         {
             Events.StartGame?.Invoke();
-            NetworkManager.Instance.CallStartGameLoadScreen();
+            _networkManager.SetRoomVisibility(false);
+            _networkManager.CallStartGameLoadScreen();
         }
 
         public void Ready()
         {
             _isReady = !_isReady;
             _readyButtonText.text = _isReady ? UNREADY_TEXT : READY_TEXT;
-            NetworkManager.Instance.CallPlayerReady(NetworkManager.Instance.OwnActorNumber, _isReady);
+            _networkManager.CallPlayerReady(NetworkManager.Instance.OwnActorNumber, _isReady);
         }
 
         public void LeaveRoom()
         {
-            NetworkManager.Instance.LeaveGame(); // Put the client offline
+            _networkManager.LeaveGame(); // Put the client offline
 
             Events.Logout?.Invoke();
             Events.HideCanvas?.Invoke(CanvasType.Lobby);
@@ -98,7 +100,7 @@ namespace HiringTest
 
         void CheckPlayersReady()
         {
-            if (!NetworkManager.Instance.IsMasterClient) return;
+            if (!_networkManager.IsMasterClient) return;
 
             Events.AllPlayersReady?.Invoke(IsAllPlayersReady());
         }
@@ -116,7 +118,7 @@ namespace HiringTest
 
         void InitPlayerList()
         {
-            foreach (var player in NetworkManager.Instance.PlayerList)
+            foreach (var player in _networkManager.PlayerList)
             {
                 if (player == null) return;
                 _playerPanels.Add(CreatePlayerPanel(player.ActorNumber, player.NickName));
@@ -144,8 +146,8 @@ namespace HiringTest
 
             _loadLevelScreemImg.DOFade(1, 0.6f).OnComplete(() =>
             {
-                if (NetworkManager.Instance.IsMasterClient)
-                    NetworkManager.Instance.LoadScene(SceneType.Gameplay);
+                if (_networkManager.IsMasterClient)
+                    _networkManager.LoadScene(SceneType.Gameplay);
             });
         }
 

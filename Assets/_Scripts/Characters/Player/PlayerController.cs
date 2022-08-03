@@ -7,6 +7,8 @@ namespace HiringTest
     public class PlayerController : MonoBehaviour
     {
         public int ActorNumber { get => _actorNumber; }
+
+        public bool IsMine { get => _isMine; }
         public Transform HeadTransform { get => _headTransform; }
 
         [SerializeField] Animator _anim;
@@ -15,11 +17,13 @@ namespace HiringTest
         [SerializeField] float _runSpeed;
         [SerializeField] Transform _cameraTransform;
         [SerializeField] Transform _headTransform;
+        [SerializeField] Collider _collider;
         [SerializeField] SkinnedMeshRenderer _meshRenderer;
 
         [SerializeField] PlayerInteractController _interactController;
 
         int _actorNumber;
+        bool _isMine;
         float _xValue;
         float _yValue;
         bool _isRunning;
@@ -37,8 +41,17 @@ namespace HiringTest
             _transform = GetComponent<Transform>();
             _photonView = GetComponent<PhotonView>();
             _inputManager = InputManager.Instance;
+
+            Events.PlayerLose += OnPlayerLose;
+
+            _isMine = _photonView.IsMine;
+            _actorNumber = _photonView.OwnerActorNr;
         }
 
+        private void OnDestroy()
+        {
+            Events.PlayerLose -= OnPlayerLose;
+        }
         private void Update()
         {
             if (_photonView.IsMine && _isPlaying)
@@ -69,7 +82,7 @@ namespace HiringTest
         public void Init(Transform camTransform, int actorNumber)
         {
             _meshRenderer.enabled = false;
-            _actorNumber = actorNumber;
+           // _actorNumber = actorNumber;
             _cameraTransform = camTransform;
             _interactController.Init(_cameraTransform.GetComponent<Camera>());
             _isPlaying = true;
@@ -114,6 +127,25 @@ namespace HiringTest
             _isRunning = !_isRunning;
         }
 
+        void OnPlayerLose(int actorNumber)
+        {
+            bool _isThisPlayer = actorNumber == _actorNumber;
+            bool _isThisClient = actorNumber == NetworkManager.Instance.OwnActorNumber;
+
+            if (_isThisClient && _isThisPlayer) // Runs death animation if it is not the own player
+            {
+                _anim.SetTrigger("death");
+            }
+
+            if (_isThisPlayer) 
+            {
+                _rb.isKinematic = true;
+                _collider.enabled = false;
+               
+            }
+
+
+        }
     }
 }
 

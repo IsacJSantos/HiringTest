@@ -13,7 +13,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 653b1b932e5e52048ad66272dba4412d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.071
+      value: 6.023
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 653b1b932e5e52048ad66272dba4412d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -21,7 +21,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 653b1b932e5e52048ad66272dba4412d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.038
+      value: 4.418
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 653b1b932e5e52048ad66272dba4412d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -283,6 +283,7 @@ MonoBehaviour:
   _runSpeed: 140
   _cameraTransform: {fileID: 0}
   _headTransform: {fileID: 1198480243193692466}
+  _collider: {fileID: 861790903}
   _meshRenderer: {fileID: 2806301271475229998}
   _interactController: {fileID: 1376675415446508988}
 --- !u!114 &1376675415446508988
@@ -298,10 +299,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cam: {fileID: 0}
-  _maxDistance: 0.65
+  _maxDistance: 0.8
   _visibleLayers:
     serializedVersion: 2
     m_Bits: 1280
+  _playerController: {fileID: 861790902}
+--- !u!114 &1454471179028123510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5586320844542904587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b671aa6f4b1398d4ba5b9f7106aacb08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3798165505550204205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -357,6 +371,9 @@ MonoBehaviour:
   - Type: 1
     SynchronizeType: 1
     Name: blendRun
+  - Type: 9
+    SynchronizeType: 0
+    Name: death
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0

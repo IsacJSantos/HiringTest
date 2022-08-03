@@ -6,15 +6,16 @@ namespace HiringTest
 {
     public class AttackState : State
     {
-        float _attackDelay = 3.5f;
+        float _attackDelay = 2f;
         float _time;
         NetworkManager _networkManager = NetworkManager.Instance;
-
+        PlayerController _player;
         public AttackState(GameObject npc, NavMeshAgent agent, Animator anim, LayerMask viewObstacleLayers, Transform playerTransform)
             : base(npc, agent, anim, viewObstacleLayers)
         {
             StateName = StateType.ATTACK;
-            _networkManager.CallPlayerCapturedRPC(playerTransform.GetComponent<PlayerController>().ActorNumber);
+            _player = playerTransform.GetComponent<PlayerController>();
+            _networkManager.CallPlayerCapturedRPC(_player.ActorNumber);
         }
 
         public override void Enter()
@@ -29,6 +30,7 @@ namespace HiringTest
             if (Time.time >= _time)
             {
                 _nextState = new IdleState(_npc, _agent, _anim, _viewObstacleLayers);
+                _networkManager.CallPlayerLoseRPC(_player.ActorNumber);
                 _stage = StateEventType.EXIT;
             }
 

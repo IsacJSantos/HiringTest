@@ -1,3 +1,4 @@
+using HiringTest.Utils;
 using Photon.Pun;
 using UnityEngine;
 
@@ -16,6 +17,8 @@ namespace HiringTest
         [SerializeField] Transform _headTransform;
         [SerializeField] SkinnedMeshRenderer _meshRenderer;
 
+        [SerializeField] PlayerInteractController _interactController;
+
         int _actorNumber;
         float _xValue;
         float _yValue;
@@ -29,6 +32,7 @@ namespace HiringTest
         PhotonView _photonView;
 
         #region MonoBehaviour Callbacks
+
         private void Awake()
         {
             _transform = GetComponent<Transform>();
@@ -44,7 +48,6 @@ namespace HiringTest
                 SetAnimation();
                 RotatePlayer();
 
-                if (_inputManager.PlayerInteractThisFrame()) Interact();
                 if (_inputManager.PlayerRunThisFrame()) ToggleRun();
                 _xValue = _inputManager.GetPlayerMoveX().x;
                 _yValue = _inputManager.GetPlayerMoveY().y;
@@ -104,10 +107,6 @@ namespace HiringTest
                 else
                     _blendRunValue = 0;
             }
-        }
-        void Interact()
-        {
-            print("Interact");
         }
 
         void ToggleRun()

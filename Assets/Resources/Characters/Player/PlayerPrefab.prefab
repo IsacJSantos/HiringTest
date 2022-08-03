@@ -13,7 +13,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 653b1b932e5e52048ad66272dba4412d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8.509817
+      value: 6.071
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 653b1b932e5e52048ad66272dba4412d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -21,7 +21,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 653b1b932e5e52048ad66272dba4412d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4.5349255
+      value: 5.038
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 653b1b932e5e52048ad66272dba4412d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -62,6 +62,14 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 653b1b932e5e52048ad66272dba4412d, type: 3}
       propertyPath: m_Layer
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 653b1b932e5e52048ad66272dba4412d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 653b1b932e5e52048ad66272dba4412d, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 653b1b932e5e52048ad66272dba4412d, type: 3}
       propertyPath: m_Controller
@@ -272,7 +280,7 @@ MonoBehaviour:
   _anim: {fileID: 1165699264166922699}
   _rb: {fileID: 861790904}
   _walkSpeed: 70
-  _runSpeed: 230
+  _runSpeed: 140
   _cameraTransform: {fileID: 0}
   _headTransform: {fileID: 1198480243193692466}
   _meshRenderer: {fileID: 2806301271475229998}
@@ -334,3 +342,15 @@ MonoBehaviour:
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
+--- !u!114 &1376675415446508988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5586320844542904587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99a6d4fc0e805a04a8be7145d4cebcb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

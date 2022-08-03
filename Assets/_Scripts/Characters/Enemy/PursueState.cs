@@ -7,7 +7,7 @@ namespace HiringTest
 {
     public class PursueState : State
     {
-        float _pursueSpeed = 3;
+        float _pursueSpeed = 2.5f;
         public PursueState(GameObject npc, NavMeshAgent agent, Animator anim, LayerMask viewObstacleLayers, Transform target)
             : base(npc, agent, anim, viewObstacleLayers)
         {

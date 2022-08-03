@@ -38,6 +38,8 @@ namespace HiringTest.Utils
 
         #region Player
         public static Action<int> PlayerCaptured;
+
+        public static Action PlayerInteracted;
         #endregion
 
         #region Gameplay

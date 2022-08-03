@@ -9,7 +9,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100000, guid: 252af556c6617a4458e79c0373d631de, type: 3}
       propertyPath: m_Name
-      value: PC_Monitor
+      value: PC_Monitor Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 252af556c6617a4458e79c0373d631de, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 252af556c6617a4458e79c0373d631de, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -71,21 +75,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: 252af556c6617a4458e79c0373d631de, type: 3}
   m_PrefabInstance: {fileID: 3165411181912181115}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &401563006
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3165411181912215515}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7cc3ea2469308540980e70ba51b0b97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playerLayer:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!65 &546079091151964677
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -99,3 +88,16 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.88027287, y: 0.474304, z: 1.1234756}
   m_Center: {x: 0.0059871674, y: 0.23276, z: -0.6384622}
+--- !u!114 &401563006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3165411181912215515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7cc3ea2469308540980e70ba51b0b97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _doorOpenMaterial: {fileID: 2100000, guid: 10714d431b75d9049a3f13f10a29a85b, type: 2}

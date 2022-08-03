@@ -18,7 +18,7 @@ namespace HiringTest
             _agent.SetDestination(GameManager.Instance.GetRandomEnemyCheckPos());
             _agent.speed = _patrolSpeed;
             _agent.isStopped = false;
-            NetworkManager.Instance.CallEnemyTriggerAnim(TriggerAnimType.Walk);
+            NetworkManager.Instance.CallEnemyTriggerAnimRPC(TriggerAnimType.Walk);
             base.Enter();
         }
 

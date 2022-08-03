@@ -20,7 +20,7 @@ namespace HiringTest
             _agent.speed = _pursueSpeed;
             _agent.SetDestination(_target.position);
             _agent.isStopped = false;
-            NetworkManager.Instance.CallEnemyTriggerAnim(TriggerAnimType.Run);
+            NetworkManager.Instance.CallEnemyTriggerAnimRPC(TriggerAnimType.Run);
             base.Enter();
         }
 

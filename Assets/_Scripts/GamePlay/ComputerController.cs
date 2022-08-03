@@ -1,28 +1,32 @@
 using UnityEngine;
-using HiringTest.Utils;
 
 namespace HiringTest 
 {
     public class ComputerController : MonoBehaviour, IInteractable
     {
-        bool _playerIsInRange;
+        [SerializeField] Material _doorOpenMaterial;
+        
+        Renderer _renderer;
+        bool _doorIsOpen;
 
         #region MonoBehaviour Callbacks
         private void Awake()
         {
-           // Events.PlayerInteracted += OnPlayerInteracted;
+            _renderer = GetComponent<Renderer>();
+          
         }
 
-        private void OnDestroy()
-        {
-           // Events.PlayerInteracted -= OnPlayerInteracted;
-        }
 
         #endregion
 
         public void Interact()
         {
-            print("Door open successfully");
+            if (_doorIsOpen) return;
+
+            NetworkManager.Instance.CallOpenExitDoorRPC();
+            _doorIsOpen = true;
+            _renderer.material = _doorOpenMaterial;
+
         }
     }
 }

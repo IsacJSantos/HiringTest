@@ -86,6 +86,7 @@ namespace HiringTest
         }
         #endregion
 
+        #region Geneal Methods
         public void LeaveGame()
         {
             PhotonNetwork.Disconnect();
@@ -106,6 +107,8 @@ namespace HiringTest
         {
             return PhotonNetwork.Instantiate(prefabName, pos, Quaternion.identity);
         }
+
+        #endregion
 
         #region Lobby Methods
 
@@ -148,19 +151,29 @@ namespace HiringTest
 
         #region GamePlay Methods
 
-        public void CallEnemyTriggerAnim(TriggerAnimType animType)
+        public void CallEnemyTriggerAnimRPC(TriggerAnimType animType)
         {
             this.photonView.RPC("SetEnemyTriggerAnim", RpcTarget.All, (int)animType);
         }
 
-        public void CallEnemyInitState(StateType enemyState)
+        public void CallEnemyInitStateRPC(StateType enemyState)
         {
             this.photonView.RPC("SetEnemyInitState", RpcTarget.All, (int)enemyState);
         }
 
-        public void CallPlayerCaptured(int actorNumber) // When a player is captured by the enemy
+        public void CallPlayerCapturedRPC(int actorNumber) // When a player is captured by the enemy
         {
             this.photonView.RPC("PlayerCaptured", RpcTarget.All, actorNumber);
+        }
+
+        public void CallOpenExitDoorRPC() 
+        {
+            this.photonView.RPC("OpenExitDoor", RpcTarget.All);
+        }
+
+        public void CallPlayerEscapedRPC(int actorNumber) 
+        {
+            this.photonView.RPC("PlayerEscaped", RpcTarget.All, actorNumber);
         }
 
         [PunRPC]
@@ -181,11 +194,20 @@ namespace HiringTest
             Events.PlayerCaptured?.Invoke(actorNumber);
         }
 
+        [PunRPC]
+        void OpenExitDoor()
+        {
+            Events.OpenExitDoor?.Invoke();
+        }
+
+        [PunRPC]
+        void PlayerEscaped(int actorNumber) 
+        {
+            Events.PlayerEscaped?.Invoke(actorNumber);
+        }
+
         #endregion
 
-        #region Gameplay Methods
-
-        #endregion
 
     }
 }

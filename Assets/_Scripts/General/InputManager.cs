@@ -12,7 +12,18 @@ namespace HiringTest
         protected override void Awake()
         {
             base.Awake();
+            Events.PlayerEscaped += DisablePlayerMovement;
+            Events.PlayerCaptured += DisablePlayerMovement;
+
             _inputControll = new Input();
+        }
+
+        protected override void OnDestroy()
+        {
+            Events.PlayerEscaped -= DisablePlayerMovement;
+            Events.PlayerCaptured -= DisablePlayerMovement;
+
+            base.OnDestroy();
         }
         private void OnEnable()
         {
@@ -57,6 +68,15 @@ namespace HiringTest
             return _inputControll.UI.PauseMenu.triggered;
         }
         #endregion
+
+
+        void DisablePlayerMovement(int actorNumber) 
+        {
+            if (actorNumber == NetworkManager.Instance.OwnActorNumber)
+            {
+                _inputControll.PlayerControl.Disable();
+            }
+        }
 
     }
 }

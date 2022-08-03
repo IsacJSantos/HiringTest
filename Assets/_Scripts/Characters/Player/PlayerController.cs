@@ -27,9 +27,8 @@ namespace HiringTest
         float _acceleration = 1.8f;
         InputManager _inputManager;
         Transform _transform;
-       
-
         PhotonView _photonView;
+        bool _isPlaying;
 
         #region MonoBehaviour Callbacks
 
@@ -42,9 +41,8 @@ namespace HiringTest
 
         private void Update()
         {
-            if (_photonView.IsMine)
+            if (_photonView.IsMine && _isPlaying)
             {
-                _meshRenderer.enabled = false;
                 SetAnimation();
                 RotatePlayer();
 
@@ -52,14 +50,13 @@ namespace HiringTest
                 _xValue = _inputManager.GetPlayerMoveX().x;
                 _yValue = _inputManager.GetPlayerMoveY().y;
             }
-            else
-                _meshRenderer.enabled = true;
+
 
         }
 
         private void FixedUpdate()
         {
-            if (_photonView.IsMine)
+            if (_photonView.IsMine && _isPlaying)
             {
                 Move();
             }
@@ -71,9 +68,11 @@ namespace HiringTest
 
         public void Init(Transform camTransform, int actorNumber)
         {
+            _meshRenderer.enabled = false;
             _actorNumber = actorNumber;
             _cameraTransform = camTransform;
             _interactController.Init(_cameraTransform.GetComponent<Camera>());
+            _isPlaying = true;
         }
 
         void Move()
@@ -114,6 +113,7 @@ namespace HiringTest
         {
             _isRunning = !_isRunning;
         }
+
     }
 }
 

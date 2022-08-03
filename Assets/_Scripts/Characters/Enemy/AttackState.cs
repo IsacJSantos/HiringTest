@@ -14,13 +14,13 @@ namespace HiringTest
             : base(npc, agent, anim, viewObstacleLayers)
         {
             StateName = StateType.ATTACK;
-            _networkManager.CallPlayerCaptured(playerTransform.GetComponent<PlayerController>().ActorNumber);
+            _networkManager.CallPlayerCapturedRPC(playerTransform.GetComponent<PlayerController>().ActorNumber);
         }
 
         public override void Enter()
         {
             _time = Time.time + _attackDelay;
-            _networkManager.CallEnemyTriggerAnim(TriggerAnimType.Attack);
+            _networkManager.CallEnemyTriggerAnimRPC(TriggerAnimType.Attack);
             base.Enter();
         }
 

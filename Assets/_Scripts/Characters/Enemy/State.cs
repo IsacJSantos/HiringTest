@@ -36,7 +36,7 @@ namespace HiringTest
         public virtual void Enter()
         {
             _stage = StateEventType.UPDATE;
-            NetworkManager.Instance.CallEnemyInitState(StateName);
+            NetworkManager.Instance.CallEnemyInitStateRPC(StateName);
         }
         public virtual void Update() { }
         public virtual void Exit() { _stage = StateEventType.EXIT; }

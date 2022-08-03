@@ -15,7 +15,7 @@ namespace HiringTest
         public override void Enter()
         {
             _agent.isStopped = true;
-            NetworkManager.Instance.CallEnemyTriggerAnim(TriggerAnimType.Idle);
+            NetworkManager.Instance.CallEnemyTriggerAnimRPC(TriggerAnimType.Idle);
             base.Enter();
         }
 

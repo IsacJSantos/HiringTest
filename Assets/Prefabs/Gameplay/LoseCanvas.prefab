@@ -458,7 +458,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _menuType: 5
-  _fadeDuration: 0.5
+  _fadeDuration: 1.5
 --- !u!225 &8669397103517645623
 CanvasGroup:
   m_ObjectHideFlags: 0

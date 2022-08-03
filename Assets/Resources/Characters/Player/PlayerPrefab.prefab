@@ -284,6 +284,21 @@ MonoBehaviour:
   _cameraTransform: {fileID: 0}
   _headTransform: {fileID: 1198480243193692466}
   _meshRenderer: {fileID: 2806301271475229998}
+  _interactController: {fileID: 1376675415446508988}
+--- !u!114 &1376675415446508988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5586320844542904587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99a6d4fc0e805a04a8be7145d4cebcb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cam: {fileID: 0}
+  _maxDistance: 0.65
 --- !u!114 &3798165505550204205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -342,15 +357,3 @@ MonoBehaviour:
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
---- !u!114 &1376675415446508988
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5586320844542904587}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99a6d4fc0e805a04a8be7145d4cebcb9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

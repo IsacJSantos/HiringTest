@@ -73,6 +73,7 @@ namespace HiringTest
         {
             _actorNumber = actorNumber;
             _cameraTransform = camTransform;
+            _interactController.Init(_cameraTransform.GetComponent<Camera>());
         }
 
         void Move()

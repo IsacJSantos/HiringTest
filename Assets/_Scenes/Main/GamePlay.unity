@@ -198,12 +198,20 @@ PrefabInstance:
       objectReference: {fileID: 963194227}
     - target: {fileID: 1376675415446508988, guid: 194d3821af16d814e88e53a7fde16a31, type: 3}
       propertyPath: _maxDistance
-      value: 0.5
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 1376675415446508988, guid: 194d3821af16d814e88e53a7fde16a31, type: 3}
       propertyPath: _camTransform
       value: 
       objectReference: {fileID: 845222996}
+    - target: {fileID: 1376675415446508988, guid: 194d3821af16d814e88e53a7fde16a31, type: 3}
+      propertyPath: _ignoredLayers.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 1376675415446508988, guid: 194d3821af16d814e88e53a7fde16a31, type: 3}
+      propertyPath: _visibleLayers.m_Bits
+      value: 1280
+      objectReference: {fileID: 0}
     - target: {fileID: 5101814876488553393, guid: 194d3821af16d814e88e53a7fde16a31, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -414,7 +422,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 0.9211823, y: 1}
+    m_SensorSize: {x: 1.0706075, y: 1}
     Iso: 200
     ShutterSpeed: 0.005
     Aperture: 16
@@ -1177,24 +1185,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9129872118933297375, guid: 9d3e4976430eb5a41801e94057832948, type: 3}
-      propertyPath: m_Size.x
-      value: 0.405062
+      propertyPath: m_Size.y
+      value: 0.7586607
       objectReference: {fileID: 0}
     - target: {fileID: 9129872118933297375, guid: 9d3e4976430eb5a41801e94057832948, type: 3}
       propertyPath: m_Size.z
-      value: 0.43408102
+      value: 0.5457872
       objectReference: {fileID: 0}
     - target: {fileID: 9129872118933297375, guid: 9d3e4976430eb5a41801e94057832948, type: 3}
-      propertyPath: m_Center.x
-      value: 0.000266999
+      propertyPath: m_Center.y
+      value: 0.37493837
       objectReference: {fileID: 0}
     - target: {fileID: 9129872118933297375, guid: 9d3e4976430eb5a41801e94057832948, type: 3}
       propertyPath: m_Center.z
-      value: 0.0706935
-      objectReference: {fileID: 0}
-    - target: {fileID: 9129872118933297375, guid: 9d3e4976430eb5a41801e94057832948, type: 3}
-      propertyPath: m_IsTrigger
-      value: 0
+      value: 0.014840394
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d3e4976430eb5a41801e94057832948, type: 3}

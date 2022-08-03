@@ -26724,6 +26724,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5965597051228942620}
     m_Modifications:
+    - target: {fileID: 546079091151964677, guid: bd4413cd92a0f334383332a32f0926b6, type: 3}
+      propertyPath: m_Size.x
+      value: 0.405062
+      objectReference: {fileID: 0}
+    - target: {fileID: 546079091151964677, guid: bd4413cd92a0f334383332a32f0926b6, type: 3}
+      propertyPath: m_Size.z
+      value: 0.48310268
+      objectReference: {fileID: 0}
+    - target: {fileID: 546079091151964677, guid: bd4413cd92a0f334383332a32f0926b6, type: 3}
+      propertyPath: m_Center.x
+      value: 0.000266999
+      objectReference: {fileID: 0}
+    - target: {fileID: 546079091151964677, guid: bd4413cd92a0f334383332a32f0926b6, type: 3}
+      propertyPath: m_Center.z
+      value: 0.046182655
+      objectReference: {fileID: 0}
+    - target: {fileID: 546079091151964677, guid: bd4413cd92a0f334383332a32f0926b6, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3165411181912052731, guid: bd4413cd92a0f334383332a32f0926b6, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -26771,6 +26791,10 @@ PrefabInstance:
     - target: {fileID: 3165411181912215515, guid: bd4413cd92a0f334383332a32f0926b6, type: 3}
       propertyPath: m_Name
       value: PC_Monitor
+      objectReference: {fileID: 0}
+    - target: {fileID: 3165411181912215515, guid: bd4413cd92a0f334383332a32f0926b6, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd4413cd92a0f334383332a32f0926b6, type: 3}

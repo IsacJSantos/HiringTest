@@ -53,6 +53,7 @@ namespace HiringTest.Utils
         #region Gameplay
         public static Action BackToMainMenu;
         public static Action OpenExitDoor;
+        public static Action ShowExitDoorOpening;
         #endregion
 
     }

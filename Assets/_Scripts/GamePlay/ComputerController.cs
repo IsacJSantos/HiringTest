@@ -29,8 +29,9 @@ namespace HiringTest
         {
             if (_doorIsOpen) return;
 
-            NetworkManager.Instance.CallOpenExitDoorRPC();
             _doorIsOpen = true;
+            Events.ShowExitDoorOpening?.Invoke();
+            NetworkManager.Instance.CallOpenExitDoorRPC();
             _renderer.material = _doorOpenMaterial;
         }
 

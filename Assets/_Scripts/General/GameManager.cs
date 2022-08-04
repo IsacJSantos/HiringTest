@@ -33,20 +33,20 @@ namespace HiringTest
             return _enemyCheckPoints[index].position;
         }
 
-        void SpawnEnemy() 
+        void SpawnEnemy()
         {
             if (_networkManager.IsMasterClient)
                 _networkManager.InstantiateNetworkObject(_enemyPrefabRef, _enemyCheckPoints[0].position);
         }
 
-        void SpawnPlayer() 
+        void SpawnPlayer()
         {
             Vector3 playerSpawnPos = _playerSpawnPoints[_networkManager.OwnActorNumber - 1].position;
-            PlayerController playerController = _networkManager.InstantiateNetworkObject(_playerPrefabRef, playerSpawnPos).GetComponent<PlayerController>();
-            if (playerController != null) 
+            PlayerManager playerManager = _networkManager.InstantiateNetworkObject(_playerPrefabRef, playerSpawnPos).GetComponent<PlayerManager>();
+            if (playerManager != null)
             {
-                _vCam.Follow = playerController.HeadTransform;
-                playerController.Init(_camTransform, _networkManager.OwnActorNumber);
+                _vCam.Follow = playerManager.HeadTransform;
+                playerManager.Init(_camTransform);
             }
         }
 

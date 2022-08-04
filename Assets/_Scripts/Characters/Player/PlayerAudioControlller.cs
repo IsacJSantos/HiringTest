@@ -9,13 +9,14 @@ namespace HiringTest
         [SerializeField] AudioClip _screamClip;
         [SerializeField] AudioClip _jumpScareClip;
 
-        PlayerController _playerController;
+        PlayerManager _playerManager;
         #region MonoBehaviour Callbacks
 
         private void Awake()
         {
             Events.PlayerCaptured += OnPlayerCaptured;
-            _playerController = GetComponent<PlayerController>();
+
+            _playerManager = GetComponent<PlayerManager>();
         }
 
         private void OnDestroy()
@@ -32,7 +33,7 @@ namespace HiringTest
                 SFXManager.Instance.PlaySFX(_jumpScareClip);
             }
 
-            if (actorNumber == _playerController.ActorNumber) 
+            if (actorNumber == _playerManager.ActorNumber) 
             {
                 _audioSource.PlayOneShot(_screamClip);
             }

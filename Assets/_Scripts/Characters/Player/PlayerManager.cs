@@ -9,6 +9,10 @@ namespace HiringTest
         public int ActorNumber { get => _actorNumber; }
 
         public bool IsMine { get => _isMine; }
+
+        [SerializeField] PlayerMovementController _movementController;
+        [SerializeField] PlayerInteractController _interactController;
+
         public Transform HeadTransform { get => _headTransform; }
 
         [SerializeField] Transform _headTransform;
@@ -19,14 +23,14 @@ namespace HiringTest
         PhotonView _photonView;
         int _actorNumber;
         bool _isMine;
-        bool _isPlaying;
+
         #region MonoBehaviour Callbacks
         private void Awake()
         {
-            _photonView = GetComponent<PhotonView>();
-
             Events.PlayerLose += OnPlayerLose;
+            Events.PlayerEscaped += OnPlayerEscape;
 
+            _photonView = GetComponent<PhotonView>();
             _isMine = _photonView.IsMine;
             _actorNumber = _photonView.OwnerActorNr;
         }
@@ -34,18 +38,39 @@ namespace HiringTest
         private void OnDestroy()
         {
             Events.PlayerLose -= OnPlayerLose;
-        }
-        private void Update()
-        {
-            
-
+            Events.PlayerEscaped -= OnPlayerEscape;
         }
 
         #endregion
 
+        public void Init(Transform camTransform)
+        {
+            _meshRenderer.enabled = false;
+            _interactController.Init(camTransform.GetComponent<Camera>());
+            _movementController.Init(camTransform);
+        }
+
         void OnPlayerLose(int actorNumber)
         {
-            
+            bool isThisPlayer = actorNumber == _actorNumber;
+
+            if (isThisPlayer)
+            {
+                _rb.isKinematic = true;
+                _collider.enabled = false;
+
+            }
+
+        }
+
+        void OnPlayerEscape(int actorNumber)
+        {
+            bool isThisPlayer = actorNumber == _actorNumber;
+
+            if (isThisPlayer)
+            {
+                gameObject.SetActive(false);
+            }
         }
 
     }

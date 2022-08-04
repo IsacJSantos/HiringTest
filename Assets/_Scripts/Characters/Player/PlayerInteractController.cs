@@ -8,7 +8,7 @@ namespace HiringTest
         [SerializeField] Camera _cam;
         [SerializeField] float _maxDistance = 5f;
         [SerializeField] LayerMask _visibleLayers;
-        [SerializeField] /*PlayerManager*/ PlayerController _playerController;
+        [SerializeField] /*PlayerManager*/ PlayerMovementController _playerController;
 
         IInteractable _interactable;
         InputManager _inputManager;

@@ -9,12 +9,12 @@ namespace HiringTest
         float _attackDelay = 2f;
         float _time;
         NetworkManager _networkManager = NetworkManager.Instance;
-        PlayerController _player;
+        PlayerManager _player;
         public AttackState(GameObject npc, NavMeshAgent agent, Animator anim, LayerMask viewObstacleLayers, Transform playerTransform)
             : base(npc, agent, anim, viewObstacleLayers)
         {
             StateName = StateType.ATTACK;
-            _player = playerTransform.GetComponent<PlayerController>();
+            _player = playerTransform.GetComponent<PlayerManager>();
             _networkManager.CallPlayerCapturedRPC(_player.ActorNumber);
         }
 

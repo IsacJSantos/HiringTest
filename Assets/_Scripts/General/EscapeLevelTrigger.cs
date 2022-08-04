@@ -8,7 +8,7 @@ namespace HiringTest
         #region MonoBehaviour Callbacks
         private void OnTriggerEnter(Collider other)
         {
-            PlayerController player;
+            PlayerManager player;
             if (other.TryGetComponent(out player))
             {
                 NetworkManager.Instance.CallPlayerEscapedRPC(player.ActorNumber);

@@ -1,4 +1,3 @@
-using UnityEngine;
 using HiringTest.Utils;
 
 namespace HiringTest
@@ -21,7 +20,9 @@ namespace HiringTest
 
         void OnPlayerLose(int actorNumber)
         {
-            if (NetworkManager.Instance.OwnActorNumber == actorNumber)
+            bool isThisClient = actorNumber == NetworkManager.Instance.OwnActorNumber;
+
+            if (isThisClient)
             {
                 ShowCanvas();
             }

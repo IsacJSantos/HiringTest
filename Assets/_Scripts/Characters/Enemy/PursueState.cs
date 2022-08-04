@@ -26,12 +26,12 @@ namespace HiringTest
 
         public override void Update()
         {
-            if (LoseTarget()) // Go to Patrol State
+            if (LoseTarget()) 
             {
                 _nextState = new PatrolState(_npc, _agent, _anim, _viewObstacleLayers);
                 _stage = StateEventType.EXIT;
             }
-            else if (IsInDestination())// Go to Attack State
+            else if (IsInDestination()) // Got the player
             {
                 _nextState = new AttackState(_npc, _agent, _anim, _viewObstacleLayers, _target);
                 _stage = StateEventType.EXIT;

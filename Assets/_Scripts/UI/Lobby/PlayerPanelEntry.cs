@@ -2,6 +2,7 @@ using HiringTest.Utils;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using DG.Tweening;
 
 namespace HiringTest
 {
@@ -17,6 +18,7 @@ namespace HiringTest
         [SerializeField] Image _readyBg;
 
         int _actorNumber;
+        float _colorChangeDuration = 0.45f;
 
         #region MonoBehaviour Callbacks
         private void Awake()
@@ -41,7 +43,6 @@ namespace HiringTest
         }
 
 
-
         void OnPlayerLeft(int actorNumber, string nickName)
         {
             if (actorNumber == _actorNumber)
@@ -55,9 +56,7 @@ namespace HiringTest
             if (actorNumber == _actorNumber)
             {
                 IsReady = isReady;
-                _readyText.text = isReady ? "Ready" : "Unready";
-                _bottonLineImg.color = isReady ? Color.green : Color.red;
-                _readyBg.color = isReady ? Color.green : Color.red;
+                SetPanelVisual(IsReady);
                 Events.PlayerReady?.Invoke(actorNumber, IsReady);
             }
 
@@ -66,6 +65,15 @@ namespace HiringTest
         void OnLogout() 
         {
            Destroy(gameObject);
+        }
+
+        void SetPanelVisual(bool ready) 
+        {
+            Color toColor = ready ? Color.green : Color.red;
+
+            _readyText.text = ready ? "Ready" : "Unready";
+            _readyBg.DOColor(toColor, _colorChangeDuration);
+            _bottonLineImg.DOColor(toColor, _colorChangeDuration);
         }
     }
 }

@@ -7,13 +7,11 @@ namespace HiringTest
     public class PlayerManager : MonoBehaviour
     {
         public int ActorNumber { get => _actorNumber; }
-
         public bool IsMine { get => _isMine; }
+        public Transform HeadTransform { get => _headTransform; }
 
         [SerializeField] PlayerMovementController _movementController;
         [SerializeField] PlayerInteractController _interactController;
-
-        public Transform HeadTransform { get => _headTransform; }
 
         [SerializeField] Transform _headTransform;
         [SerializeField] Collider _collider;
@@ -58,7 +56,6 @@ namespace HiringTest
             {
                 _rb.isKinematic = true;
                 _collider.enabled = false;
-
             }
 
         }

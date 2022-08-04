@@ -10,6 +10,7 @@ namespace HiringTest
         [SerializeField] AudioClip _jumpScareClip;
 
         PlayerManager _playerManager;
+
         #region MonoBehaviour Callbacks
 
         private void Awake()
@@ -28,12 +29,15 @@ namespace HiringTest
 
         void OnPlayerCaptured(int actorNumber)
         {
-            if (actorNumber == NetworkManager.Instance.OwnActorNumber) 
+            bool isThisClient = actorNumber == NetworkManager.Instance.OwnActorNumber;
+            bool isThisPlayer = actorNumber == _playerManager.ActorNumber;
+
+            if (isThisClient) 
             {
                 SFXManager.Instance.PlaySFX(_jumpScareClip);
             }
 
-            if (actorNumber == _playerManager.ActorNumber) 
+            if (isThisPlayer) 
             {
                 _audioSource.PlayOneShot(_screamClip);
             }

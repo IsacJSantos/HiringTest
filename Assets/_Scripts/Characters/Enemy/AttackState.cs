@@ -30,7 +30,7 @@ namespace HiringTest
             if (_canAttack)
             {
                 _time = Time.time + _attackDelay;
-                _networkManager.CallEnemyTriggerAnimRPC(TriggerAnimType.Attack);
+                _networkManager.CallEnemyTriggerAnimRPC(TriggerAnimType.Attack); // If the enemy can attack, calls the attack animation remotely
             }
             
             base.Enter();
@@ -38,7 +38,7 @@ namespace HiringTest
 
         public override void Update()
         {
-            if (!_canAttack) 
+            if (!_canAttack) // If thid enemy cant attack, go back to Idle state
             {
                 _nextState = new IdleState(_npc, _agent, _anim, _viewObstacleLayers);
                 _stage = StateEventType.EXIT;

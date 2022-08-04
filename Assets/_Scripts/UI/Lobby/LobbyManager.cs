@@ -2,7 +2,6 @@ using HiringTest.Utils;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using TMPro;
 using UnityEngine.UI;
 using DG.Tweening;
 
@@ -11,13 +10,10 @@ namespace HiringTest
     public class LobbyManager : MonoBehaviour
     {
         [SerializeField] string _playerPanelEntryRef; // Reference to find this object in Resources folder
-        [SerializeField] Transform _playerListTrans;
-        [SerializeField] TextMeshProUGUI _readyButtonText;
+        [SerializeField] Transform _playerListContainer;
         [SerializeField] Image _loadLevelScreemImg;
 
         bool _isReady;
-        const string READY_TEXT = "Ready";
-        const string UNREADY_TEXT = "Unready";
         NetworkManager _networkManager;
         List<PlayerPanelEntry> _playerPanels = new List<PlayerPanelEntry>();
 
@@ -50,14 +46,13 @@ namespace HiringTest
         {
             Events.StartGame?.Invoke();
             _networkManager.SetRoomVisibility(false);
-            _networkManager.CallStartGameLoadScreen();
+            _networkManager.CallStartGameLoadScreenRPC();
         }
 
         public void Ready()
         {
             _isReady = !_isReady;
-            _readyButtonText.text = _isReady ? UNREADY_TEXT : READY_TEXT;
-            _networkManager.CallPlayerReady(NetworkManager.Instance.OwnActorNumber, _isReady);
+            _networkManager.CallPlayerReadyRPC(_networkManager.OwnActorNumber, _isReady);
         }
 
         public void LeaveRoom()
@@ -76,7 +71,6 @@ namespace HiringTest
             InitPlayerList();
 
             _isReady = false;
-            _readyButtonText.text = READY_TEXT;
             Events.OpenCanvas?.Invoke(CanvasType.Lobby);
         }
 
@@ -115,12 +109,10 @@ namespace HiringTest
             {
                 if (_playerPanels[i].IsReady == false) 
                 {
-                    print("Find a unready");
                     return false;
                 }
                     
             }
-            print("All players ready");
             return true;
         }
 
@@ -143,7 +135,7 @@ namespace HiringTest
                 return null;
             }
 
-            PlayerPanelEntry playerPanel = Instantiate(ob, _playerListTrans).GetComponent<PlayerPanelEntry>();
+            PlayerPanelEntry playerPanel = Instantiate(ob, _playerListContainer).GetComponent<PlayerPanelEntry>();
             playerPanel.Init(actorNumber, nickName);
             return playerPanel;
         }

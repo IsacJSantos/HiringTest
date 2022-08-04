@@ -12,6 +12,7 @@ namespace HiringTest
         float _breathDelay = 6f;
         bool _isChasingPlayer;
         Coroutine _breathingRoutine;
+
         #region MonoBehaviour Callbacks
         private void Awake()
         {
@@ -76,7 +77,7 @@ namespace HiringTest
 
         }
 
-        IEnumerator _Breathing()
+        IEnumerator _Breathing() // Plays random breath sound
         {
             while (true)
             {

@@ -2,6 +2,7 @@ using UnityEngine;
 using DG.Tweening;
 using HiringTest.Utils;
 
+/* Base class for all game canvas */
 
 namespace HiringTest
 {

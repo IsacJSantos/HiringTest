@@ -136,12 +136,12 @@ namespace HiringTest
             }
         }
 
-        public void CallPlayerReady(int actorNumber, bool ready)
+        public void CallPlayerReadyRPC(int actorNumber, bool ready)
         {
             this.photonView.RPC("SetPlayerReady", RpcTarget.AllBuffered, actorNumber, ready);
         }
 
-        public void CallStartGameLoadScreen()
+        public void CallStartGameLoadScreenRPC()
         {
             this.photonView.RPC("InitLoadLevelScreen", RpcTarget.AllBuffered);
         }

@@ -6,7 +6,6 @@ namespace HiringTest
 {
     public class GameManager : Singleton<GameManager>
     {
-
         [SerializeField] Transform[] _enemyCheckPoints;
         [SerializeField] Transform[] _playerSpawnPoints;
         [SerializeField] Transform _camTransform;
@@ -21,6 +20,7 @@ namespace HiringTest
         private void Start()
         {
             _networkManager = NetworkManager.Instance;
+
             SpawnEnemy();
             SpawnPlayer();
         }

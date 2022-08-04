@@ -9,6 +9,7 @@ namespace HiringTest
         [SerializeField] Animation _anim;
 
         bool _isOpen;
+
         #region MonoBehaviour Callbacks
         private void Awake()
         {

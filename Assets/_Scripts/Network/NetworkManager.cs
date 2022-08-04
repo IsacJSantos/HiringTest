@@ -7,6 +7,7 @@ using System.Linq;
 
 namespace HiringTest
 {
+    /* Centralized class for all network stuff */
     [DisallowMultipleComponent]
     public class NetworkManager : SingletonPunCallback<NetworkManager>
     {
@@ -20,7 +21,6 @@ namespace HiringTest
         [SerializeField] int _ownActorNumber;
 
         string gameVersion = "1";
-
 
         #region MonoBehaviour Callbacks
 
@@ -44,6 +44,7 @@ namespace HiringTest
         public override void OnDisconnected(DisconnectCause cause)
         {
             Debug.Log("Disconnected");
+            Events.Disconnected?.Invoke();
         }
 
         public override void OnJoinRandomFailed(short returnCode, string message)
@@ -96,7 +97,6 @@ namespace HiringTest
         public void LeaveGame()
         {
             PhotonNetwork.Disconnect();
-            Events.Disconnected?.Invoke();
         }
 
         public void LoadScene(SceneType sceneType)
@@ -179,7 +179,7 @@ namespace HiringTest
 
         public void CallOpenExitDoorRPC() 
         {
-            this.photonView.RPC("OpenExitDoor", RpcTarget.All);
+            this.photonView.RPC("OpenExitDoor", RpcTarget.OthersBuffered);
         }
 
         public void CallPlayerEscapedRPC(int actorNumber) 
@@ -229,7 +229,6 @@ namespace HiringTest
         }
 
         #endregion
-
 
     }
 }

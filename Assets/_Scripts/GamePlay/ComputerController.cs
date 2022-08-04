@@ -1,4 +1,5 @@
 using UnityEngine;
+using HiringTest.Utils;
 
 namespace HiringTest 
 {
@@ -12,10 +13,15 @@ namespace HiringTest
         #region MonoBehaviour Callbacks
         private void Awake()
         {
+            Events.OpenExitDoor += OnOpenExitDoor;
+
             _renderer = GetComponent<Renderer>();
-          
         }
 
+        private void OnDestroy()
+        {
+            Events.OpenExitDoor -= OnOpenExitDoor;
+        }
 
         #endregion
 
@@ -26,8 +32,14 @@ namespace HiringTest
             NetworkManager.Instance.CallOpenExitDoorRPC();
             _doorIsOpen = true;
             _renderer.material = _doorOpenMaterial;
-
         }
+
+        void OnOpenExitDoor() 
+        {
+            _doorIsOpen = true;
+        }
+
+
     }
 }
 

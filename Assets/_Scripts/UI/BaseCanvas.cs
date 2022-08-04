@@ -10,7 +10,7 @@ namespace HiringTest
     [RequireComponent(typeof(Canvas))]
     public abstract class BaseCanvas : MonoBehaviour
     {
-        [SerializeField] CanvasType _menuType;
+        [SerializeField]protected CanvasType _menuType;
         [SerializeField] protected float _fadeDuration = 0.3f;
 
         protected Canvas _canvas;

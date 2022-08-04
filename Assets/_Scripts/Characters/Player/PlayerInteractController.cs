@@ -8,7 +8,6 @@ namespace HiringTest
         [SerializeField] Camera _cam;
         [SerializeField] float _maxDistance = 5f;
         [SerializeField] LayerMask _visibleLayers;
-        [SerializeField] /*PlayerManager*/ PlayerMovementController _playerController;
 
         IInteractable _interactable;
         InputManager _inputManager;
@@ -19,6 +18,7 @@ namespace HiringTest
         Transform _currentTransform; // Current object captured by the ray
 
         bool _isEnable;
+
         #region MonoBehaviour Callbacks
 
         private void Update()
@@ -40,10 +40,17 @@ namespace HiringTest
                 _currentTransform = _hit.transform;
 
                 if (!_hit.transform.TryGetComponent<IInteractable>(out _interactable))
+                {
+                    Events.HideCanvas?.Invoke(CanvasType.Interact);
                     _interactable = null;
+                }
+                else
+                    Events.OpenCanvas?.Invoke(CanvasType.Interact);
+
             }
-            else
+            else if(_interactable != null)
             {
+                Events.HideCanvas?.Invoke(CanvasType.Interact);
                 _currentTransform = null;
                 _interactable = null;
             }
@@ -51,6 +58,7 @@ namespace HiringTest
         }
 
         #endregion
+
         public void Init(Camera cam)
         {
             _cam = cam;

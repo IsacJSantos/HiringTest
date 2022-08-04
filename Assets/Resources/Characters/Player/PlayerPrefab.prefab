@@ -282,7 +282,6 @@ MonoBehaviour:
   _visibleLayers:
     serializedVersion: 2
     m_Bits: 1280
-  _playerController: {fileID: 0}
 --- !u!114 &1454471179028123510
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -364,17 +363,17 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters:
   - Type: 3
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: vertical
   - Type: 3
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: horizontal
   - Type: 1
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: blendRun
   - Type: 9
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: death
   m_SynchronizeLayers:
-  - SynchronizeType: 1
+  - SynchronizeType: 2
     LayerIndex: 0

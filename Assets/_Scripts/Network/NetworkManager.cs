@@ -84,6 +84,12 @@ namespace HiringTest
             Events.PlayerLeftRoom?.Invoke(otherPlayer.ActorNumber, otherPlayer.NickName);
             _playerList.Remove(otherPlayer);
         }
+
+        public override void OnMasterClientSwitched(Player newMasterClient)
+        {
+            Events.MasterClientSwitched?.Invoke(newMasterClient.ActorNumber);
+        }
+
         #endregion
 
         #region Geneal Methods
@@ -103,11 +109,16 @@ namespace HiringTest
             PhotonNetwork.CurrentRoom.IsOpen = open;
         }
 
-        public GameObject InstantiateNetworkObject(string prefabName, Vector3 pos)
+        public GameObject InstantiateNetworkedObject(string prefabName, Vector3 pos)
         {
             return PhotonNetwork.Instantiate(prefabName, pos, Quaternion.identity);
         }
-        
+
+        public GameObject InstantiateRoomNetworkedObject(string prefabName, Vector3 pos)
+        {
+            return PhotonNetwork.InstantiateRoomObject(prefabName, pos, Quaternion.identity);
+        }
+
         #endregion
 
         #region Lobby Methods

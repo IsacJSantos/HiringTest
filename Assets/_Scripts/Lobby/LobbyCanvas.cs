@@ -6,8 +6,9 @@ namespace HiringTest
 {
     public class LobbyCanvas : BaseCanvas
     {
-
         [SerializeField] Button _startGameButton;
+
+        NetworkManager _networkManager;
 
         #region MonoBehaviour Callbacks
         protected override void Awake()
@@ -16,6 +17,9 @@ namespace HiringTest
 
             Events.AllPlayersReady += OnAllPlayersReady;
             Events.Disconnected += OnDisconnected;
+            Events.MasterClientSwitched += OnMasterClientSwitched;
+
+            _networkManager = NetworkManager.Instance;
         }
 
         protected override void OnDestroy()
@@ -23,6 +27,8 @@ namespace HiringTest
 
             Events.AllPlayersReady -= OnAllPlayersReady;
             Events.Disconnected -= OnDisconnected;
+            Events.MasterClientSwitched -= OnMasterClientSwitched;
+
             base.OnDestroy();
         }
 
@@ -30,14 +36,14 @@ namespace HiringTest
 
         public override void ShowCanvas()
         {
-           _startGameButton.gameObject.SetActive(NetworkManager.Instance.IsMasterClient);
+           _startGameButton.gameObject.SetActive(_networkManager.IsMasterClient);
             base.ShowCanvas();
         }
   
 
         void OnAllPlayersReady(bool allReady)
         {
-            if (!NetworkManager.Instance.IsMasterClient) return;
+            if (!_networkManager.IsMasterClient) return;
 
             ToggleStartGameButton(allReady);
 
@@ -45,7 +51,6 @@ namespace HiringTest
        
         void ToggleStartGameButton(bool interactable)
         {
-            print("Toggle Start Game " + interactable);
             _startGameButton.interactable = interactable;
         }
 
@@ -54,6 +59,13 @@ namespace HiringTest
             _startGameButton.interactable = false;
         }
 
+        void OnMasterClientSwitched(int actorNumber) 
+        {
+            if (actorNumber == _networkManager.OwnActorNumber)
+            {
+                _startGameButton.gameObject.SetActive(true);
+            }
+        }
     }
 
 }

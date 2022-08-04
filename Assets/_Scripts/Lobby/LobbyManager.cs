@@ -29,6 +29,8 @@ namespace HiringTest
             Events.PlayerEnterRoom += OnPlayerEnter;
             Events.PlayerLeftRoom += OnPlayerLeft;
             Events.StartGameLoadingScreen += OnStartGameLoadingScreen;
+            Events.Disconnected += OnDisconnected;
+
             _networkManager = NetworkManager.Instance;
         }
 
@@ -39,6 +41,7 @@ namespace HiringTest
             Events.PlayerEnterRoom -= OnPlayerEnter;
             Events.PlayerLeftRoom -= OnPlayerLeft;
             Events.StartGameLoadingScreen -= OnStartGameLoadingScreen;
+            Events.Disconnected -= OnDisconnected;
         }
 
         #endregion
@@ -110,9 +113,14 @@ namespace HiringTest
             int count = _playerPanels.Count;
             for (int i = 0; i < count; i++)
             {
-                if (_playerPanels[i].IsReady == false)
+                if (_playerPanels[i].IsReady == false) 
+                {
+                    print("Find a unready");
                     return false;
+                }
+                    
             }
+            print("All players ready");
             return true;
         }
 
@@ -149,6 +157,11 @@ namespace HiringTest
                 if (_networkManager.IsMasterClient)
                     _networkManager.LoadScene(SceneType.Gameplay);
             });
+        }
+
+        void OnDisconnected()
+        {
+            _playerPanels.Clear();
         }
 
     }

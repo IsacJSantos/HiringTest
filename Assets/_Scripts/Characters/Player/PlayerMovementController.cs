@@ -1,37 +1,26 @@
 using HiringTest.Utils;
-using Photon.Pun;
 using UnityEngine;
 
 namespace HiringTest
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerMovementController : MonoBehaviour
     {
-        public int ActorNumber { get => _actorNumber; }
-
-        public bool IsMine { get => _isMine; }
-        public Transform HeadTransform { get => _headTransform; }
-
         [SerializeField] Animator _anim;
         [SerializeField] Rigidbody _rb;
         [SerializeField] float _walkSpeed;
         [SerializeField] float _runSpeed;
-        [SerializeField] Transform _cameraTransform;
-        [SerializeField] Transform _headTransform;
-        [SerializeField] Collider _collider;
-        [SerializeField] SkinnedMeshRenderer _meshRenderer;
+       
+        Transform _cameraTransform;
+        PlayerManager _playerManager;
+        InputManager _inputManager;
+        Transform _transform;
 
-        [SerializeField] PlayerInteractController _interactController;
-
-        int _actorNumber;
-        bool _isMine;
         float _xValue;
         float _yValue;
         bool _isRunning;
         float _blendRunValue;
         float _acceleration = 1.8f;
-        InputManager _inputManager;
-        Transform _transform;
-        PhotonView _photonView;
+
         bool _isPlaying;
 
         #region MonoBehaviour Callbacks
@@ -39,25 +28,20 @@ namespace HiringTest
         private void Awake()
         {
             _transform = GetComponent<Transform>();
-            _photonView = GetComponent<PhotonView>();
+            _playerManager = GetComponent<PlayerManager>();
             _inputManager = InputManager.Instance;
 
             Events.PlayerLose += OnPlayerLose;
-            Events.PlayerEscaped += OnPlayerEscape;
-
-            _isMine = _photonView.IsMine;
-            _actorNumber = _photonView.OwnerActorNr;
         }
 
         private void OnDestroy()
         {
             Events.PlayerLose -= OnPlayerLose;
-            Events.PlayerEscaped += OnPlayerEscape;
         }
 
         private void Update()
         {
-            if (_photonView.IsMine && _isPlaying)
+            if (_playerManager.IsMine && _isPlaying)
             {
                 SetAnimation();
                 RotatePlayer();
@@ -72,7 +56,7 @@ namespace HiringTest
 
         private void FixedUpdate()
         {
-            if (_photonView.IsMine && _isPlaying)
+            if (_playerManager.IsMine && _isPlaying)
             {
                 Move();
             }
@@ -82,11 +66,9 @@ namespace HiringTest
         #endregion
 
 
-        public void Init(Transform camTransform, int actorNumber)
+        public void Init(Transform camTransform)
         {
-            _meshRenderer.enabled = false;
             _cameraTransform = camTransform;
-            _interactController.Init(_cameraTransform.GetComponent<Camera>());
             _isPlaying = true;
         }
 
@@ -131,31 +113,17 @@ namespace HiringTest
 
         void OnPlayerLose(int actorNumber)
         {
-            bool isThisPlayer = actorNumber == _actorNumber;
+            bool isThisPlayer = actorNumber == _playerManager.ActorNumber;
             bool isThisClient = actorNumber == NetworkManager.Instance.OwnActorNumber;
 
-            if (isThisPlayer) 
+
+            if (!isThisClient && isThisPlayer) 
             {
-                _rb.isKinematic = true;
-                _collider.enabled = false;
-
-                if(!isThisClient)
-                    _anim.SetTrigger("death");
-
+                _anim.SetTrigger("death");
             }
 
         }
 
-        void OnPlayerEscape(int actorNumber) 
-        {
-            bool isThisPlayer = actorNumber == _actorNumber;
-        
-            if (isThisPlayer)
-            {
-                gameObject.SetActive(false);
-
-            }
-        }
     }
 }
 

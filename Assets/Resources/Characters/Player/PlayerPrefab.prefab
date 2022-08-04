@@ -265,27 +265,6 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &861790902
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5586320844542904587}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5dfb7c66c08f44d44abb873ba15207c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _anim: {fileID: 1165699264166922699}
-  _rb: {fileID: 861790904}
-  _walkSpeed: 60
-  _runSpeed: 155
-  _cameraTransform: {fileID: 0}
-  _headTransform: {fileID: 1198480243193692466}
-  _collider: {fileID: 861790903}
-  _meshRenderer: {fileID: 2806301271475229998}
-  _interactController: {fileID: 1376675415446508988}
 --- !u!114 &1376675415446508988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -303,7 +282,7 @@ MonoBehaviour:
   _visibleLayers:
     serializedVersion: 2
     m_Bits: 1280
-  _playerController: {fileID: 861790902}
+  _playerController: {fileID: 0}
 --- !u!114 &1454471179028123510
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -316,10 +295,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b671aa6f4b1398d4ba5b9f7106aacb08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _headTransform: {fileID: 0}
-  _collider: {fileID: 0}
-  _meshRenderer: {fileID: 0}
-  _rb: {fileID: 0}
+  _movementController: {fileID: 3094339294741620316}
+  _interactController: {fileID: 1376675415446508988}
+  _headTransform: {fileID: 1198480243193692466}
+  _collider: {fileID: 861790903}
+  _meshRenderer: {fileID: 2806301271475229998}
+  _rb: {fileID: 861790904}
+--- !u!114 &3094339294741620316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5586320844542904587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fde11de4e078ea842b482e1b4eb4dfb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _anim: {fileID: 1165699264166922699}
+  _rb: {fileID: 861790904}
+  _walkSpeed: 65
+  _runSpeed: 155
 --- !u!114 &3798165505550204205
 MonoBehaviour:
   m_ObjectHideFlags: 0

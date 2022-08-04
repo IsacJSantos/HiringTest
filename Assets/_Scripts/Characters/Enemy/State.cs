@@ -19,9 +19,8 @@ namespace HiringTest
         float _viewDistance = 8f;
         float _viewAngle = 85;
         int _targetLayerMask = 3;
-        float _viewDelay = 0.5f; // Frequency at which the enemy's vision is updated
-        RaycastHit _rayHit;
 
+        float _viewDelay = 0.5f; // Frequency at which the enemy's vision is updated
         float _time;
 
         public State(GameObject npc, NavMeshAgent agent, Animator anim, LayerMask viewObstacleLayers)
@@ -62,16 +61,21 @@ namespace HiringTest
 
             _time = Time.time + _viewDelay;
 
-            Transform targetTrans = GetTargetInArea();
+            Transform[] targets = GetTargetInArea();
 
-            if (targetTrans == null) return false;
+            if (targets == null || targets.Length < 1) return false;
 
-            if (IsInAngle(targetTrans.position))
+            int count = targets.Length;
+
+            for (int i = 0; i < count; i++)
             {
-                if (!HasObstacle(targetTrans.position))
+                if (IsInAngle(targets[i].position))
                 {
-                    _target = targetTrans;
-                    return true;
+                    if (!HasObstacle(targets[i].position))
+                    {
+                        _target = targets[i];
+                        return true;
+                    }
                 }
             }
 
@@ -89,40 +93,36 @@ namespace HiringTest
             return Vector3.Distance(_npc.transform.position, _target.position) > _viewDistance;
         }
 
-        Transform GetTargetInArea()
+        Transform[] GetTargetInArea()
         {
-            Collider[] colliders = Physics.OverlapSphere(_npc.transform.position, _viewRadius);
-            if (colliders == null || colliders.Length < 1)
-            {
-                return null;
-            }
+            int maxOfColliders = 2;
+            Collider[] hitColliders = new Collider[maxOfColliders];
+            int numColliders = Physics.OverlapSphereNonAlloc(_npc.transform.position, _viewRadius, hitColliders, 1 << _targetLayerMask);
 
-            foreach (var col in colliders)
+            if (numColliders > 0)
             {
-                if (col.gameObject.layer == _targetLayerMask)
-                    return col.transform;
+                Transform[] transforms = new Transform[numColliders];
+                for (int i = 0; i < numColliders; i++)
+                {
+                    transforms[i] = hitColliders[i].transform;
+                }
+                return transforms;
             }
-
-            return null;
+            else return null;
         }
 
         bool IsInAngle(Vector3 targetPos)
         {
             Vector3 targetDir = targetPos - _npc.transform.position;
             return Vector3.Angle(targetDir, _npc.transform.forward) <= _viewAngle;
-
         }
 
         bool HasObstacle(Vector3 targetPos)
         {
             Vector3 direction = targetPos - _npc.transform.position;
             float distance = Vector3.Distance(targetPos, _npc.transform.position);
-            if (Physics.Raycast(_npc.transform.position, direction, out _rayHit, distance, _viewObstacleLayers))
-            {
-                return true;
-            }
-            return false;
 
+            return Physics.Raycast(_npc.transform.position, direction, distance, _viewObstacleLayers);
         }
     }
 }

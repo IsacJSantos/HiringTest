@@ -7,17 +7,17 @@ namespace HiringTest.Utils
         #region Menus
         public static Action<CanvasType> OpenCanvas;
         public static Action<CanvasType> HideCanvas;
+
+        public static Action<bool> Paused;
         #endregion
 
         #region Network
         public static Action Connected;
         public static Action ConnectFail;
         public static Action Disconnected;
-        public static Action<int, string> PlayerLeftRoom;
-        public static Action<int, string> PlayerEnterRoom;
 
-        public static Action<int, bool> SetPlayerReady;
-        public static Action<int, bool> PlayerReady;
+
+        public static Action<int> MasterClientSwitched;
 
         #endregion
 
@@ -37,9 +37,16 @@ namespace HiringTest.Utils
         #endregion
 
         #region Player
+        public static Action<int, string> PlayerLeftRoom;
+        public static Action<int, string> PlayerEnterRoom;
+
+        public static Action<int, bool> SetPlayerReady;
+        public static Action<int, bool> PlayerReady;
+
         public static Action<int> PlayerCaptured;
         public static Action<int> PlayerEscaped;
         public static Action<int> PlayerLose;
+
         public static Action PlayerInteracted;
         #endregion
 

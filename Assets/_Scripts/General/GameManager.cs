@@ -36,13 +36,13 @@ namespace HiringTest
         void SpawnEnemy()
         {
             if (_networkManager.IsMasterClient)
-                _networkManager.InstantiateNetworkObject(_enemyPrefabRef, _enemyCheckPoints[0].position);
+                _networkManager.InstantiateRoomNetworkedObject(_enemyPrefabRef, _enemyCheckPoints[0].position);
         }
 
         void SpawnPlayer()
         {
             Vector3 playerSpawnPos = _playerSpawnPoints[_networkManager.OwnActorNumber - 1].position;
-            PlayerManager playerManager = _networkManager.InstantiateNetworkObject(_playerPrefabRef, playerSpawnPos).GetComponent<PlayerManager>();
+            PlayerManager playerManager = _networkManager.InstantiateNetworkedObject(_playerPrefabRef, playerSpawnPos).GetComponent<PlayerManager>();
             if (playerManager != null)
             {
                 _vCam.Follow = playerManager.HeadTransform;

@@ -43,6 +43,7 @@ namespace HiringTest
             _inputManager = InputManager.Instance;
 
             Events.PlayerLose += OnPlayerLose;
+            Events.PlayerEscaped += OnPlayerEscape;
 
             _isMine = _photonView.IsMine;
             _actorNumber = _photonView.OwnerActorNr;
@@ -51,7 +52,9 @@ namespace HiringTest
         private void OnDestroy()
         {
             Events.PlayerLose -= OnPlayerLose;
+            Events.PlayerEscaped += OnPlayerEscape;
         }
+
         private void Update()
         {
             if (_photonView.IsMine && _isPlaying)
@@ -82,7 +85,6 @@ namespace HiringTest
         public void Init(Transform camTransform, int actorNumber)
         {
             _meshRenderer.enabled = false;
-           // _actorNumber = actorNumber;
             _cameraTransform = camTransform;
             _interactController.Init(_cameraTransform.GetComponent<Camera>());
             _isPlaying = true;
@@ -129,22 +131,30 @@ namespace HiringTest
 
         void OnPlayerLose(int actorNumber)
         {
-            bool _isThisPlayer = actorNumber == _actorNumber;
-            bool _isThisClient = actorNumber == NetworkManager.Instance.OwnActorNumber;
+            bool isThisPlayer = actorNumber == _actorNumber;
+            bool isThisClient = actorNumber == NetworkManager.Instance.OwnActorNumber;
 
-            if (_isThisClient && _isThisPlayer) // Runs death animation if it is not the own player
-            {
-                _anim.SetTrigger("death");
-            }
-
-            if (_isThisPlayer) 
+            if (isThisPlayer) 
             {
                 _rb.isKinematic = true;
                 _collider.enabled = false;
-               
+
+                if(!isThisClient)
+                    _anim.SetTrigger("death");
+
             }
 
+        }
 
+        void OnPlayerEscape(int actorNumber) 
+        {
+            bool isThisPlayer = actorNumber == _actorNumber;
+        
+            if (isThisPlayer)
+            {
+                gameObject.SetActive(false);
+
+            }
         }
     }
 }

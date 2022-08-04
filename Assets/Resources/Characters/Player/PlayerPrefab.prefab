@@ -279,8 +279,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _anim: {fileID: 1165699264166922699}
   _rb: {fileID: 861790904}
-  _walkSpeed: 70
-  _runSpeed: 140
+  _walkSpeed: 60
+  _runSpeed: 155
   _cameraTransform: {fileID: 0}
   _headTransform: {fileID: 1198480243193692466}
   _collider: {fileID: 861790903}
@@ -316,6 +316,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b671aa6f4b1398d4ba5b9f7106aacb08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _headTransform: {fileID: 0}
+  _collider: {fileID: 0}
+  _meshRenderer: {fileID: 0}
+  _rb: {fileID: 0}
 --- !u!114 &3798165505550204205
 MonoBehaviour:
   m_ObjectHideFlags: 0

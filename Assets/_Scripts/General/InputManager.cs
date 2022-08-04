@@ -2,7 +2,7 @@ using UnityEngine.InputSystem;
 using HiringTest.Utils;
 using UnityEngine;
 
-namespace HiringTest 
+namespace HiringTest
 {
     public class InputManager : Singleton<InputManager>
     {
@@ -14,14 +14,17 @@ namespace HiringTest
             base.Awake();
             Events.PlayerEscaped += DisablePlayerMovement;
             Events.PlayerCaptured += DisablePlayerMovement;
+            Events.Paused += OnGamePaused;
 
             _inputControll = new Input();
+            Cursor.visible = false;
         }
 
         protected override void OnDestroy()
         {
             Events.PlayerEscaped -= DisablePlayerMovement;
             Events.PlayerCaptured -= DisablePlayerMovement;
+            Events.Paused -= OnGamePaused;
 
             base.OnDestroy();
         }
@@ -63,21 +66,35 @@ namespace HiringTest
         #endregion
 
         #region PauseMenu 
-        public bool PressedPauseThisFrame() 
+        public bool PressedPauseThisFrame()
         {
             return _inputControll.UI.PauseMenu.triggered;
         }
         #endregion
 
 
-        void DisablePlayerMovement(int actorNumber) 
+        void DisablePlayerMovement(int actorNumber)
         {
             if (actorNumber == NetworkManager.Instance.OwnActorNumber)
             {
+                Cursor.visible = true;
                 _inputControll.PlayerControl.Disable();
             }
         }
 
+        void OnGamePaused(bool paused)
+        {
+            if (paused)
+            {
+                _inputControll.PlayerControl.Disable();
+                Cursor.visible = true;
+            }
+            else
+            {
+                Cursor.visible = false;
+                _inputControll.PlayerControl.Enable();
+            }
+        }
     }
 }
 

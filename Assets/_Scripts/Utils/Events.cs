@@ -7,6 +7,8 @@ namespace HiringTest.Utils
         #region Menus
         public static Action<CanvasType> OpenCanvas;
         public static Action<CanvasType> HideCanvas;
+
+        public static Action<bool> Paused;
         #endregion
 
         #region Network

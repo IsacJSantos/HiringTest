@@ -28,6 +28,8 @@ namespace HiringTest
 
         void ToggleSideMenu(bool show)
         {
+            Events.Paused?.Invoke(show);
+
             float from = show ? 0 : 1;
             int to = show ? 1 : -1;
 

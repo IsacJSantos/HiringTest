@@ -18,8 +18,9 @@ namespace HiringTest
         float _xValue;
         float _yValue;
         bool _isRunning;
-        float _blendRunValue;
-        float _acceleration = 1.8f;
+
+        float _blendRunValue; // Stores the animation blend value
+        float _acceleration = 1.8f; // The speed at which the blend is increase/decrease
 
         bool _isPlaying;
 
@@ -27,11 +28,11 @@ namespace HiringTest
 
         private void Awake()
         {
+            Events.PlayerLose += OnPlayerLose;
+
             _transform = GetComponent<Transform>();
             _playerManager = GetComponent<PlayerManager>();
             _inputManager = InputManager.Instance;
-
-            Events.PlayerLose += OnPlayerLose;
         }
 
         private void OnDestroy()
@@ -41,14 +42,14 @@ namespace HiringTest
 
         private void Update()
         {
-            if (_playerManager.IsMine && _isPlaying)
+            if (_playerManager.IsMine && _isPlaying) // Checks if this player is the client and is ready to use
             {
-                SetAnimation();
-                RotatePlayer();
-
                 if (_inputManager.PlayerRunThisFrame()) ToggleRun();
                 _xValue = _inputManager.GetPlayerMoveX().x;
                 _yValue = _inputManager.GetPlayerMoveY().y;
+
+                SetAnimation();
+                RotatePlayer();
             }
 
 
@@ -56,11 +57,10 @@ namespace HiringTest
 
         private void FixedUpdate()
         {
-            if (_playerManager.IsMine && _isPlaying)
+            if (_playerManager.IsMine && _isPlaying) // Checks if this player is the client and is ready to use
             {
                 Move();
             }
-
         }
 
         #endregion
@@ -71,6 +71,7 @@ namespace HiringTest
             _cameraTransform = camTransform;
             _isPlaying = true;
         }
+
 
         void Move()
         {
@@ -86,10 +87,34 @@ namespace HiringTest
 
         private void SetAnimation()
         {
+            UpdateBlendRunValue();
+
             _anim.SetInteger("vertical", (int)_yValue);
             _anim.SetInteger("horizontal", (int)_xValue);
             _anim.SetFloat("blendRun", _blendRunValue);
 
+        }
+
+        void ToggleRun()
+        {
+            _isRunning = !_isRunning;
+        }
+
+        void OnPlayerLose(int actorNumber)
+        {
+            bool isThisPlayer = actorNumber == _playerManager.ActorNumber;
+            bool isThisClient = actorNumber == NetworkManager.Instance.OwnActorNumber;
+
+
+            if (!isThisClient && isThisPlayer) // Call Death animation if this player is not this client
+            {
+                _anim.SetTrigger("death");
+            }
+
+        }
+
+        void UpdateBlendRunValue() // Increase/decrease the Run Blend value to change player movement animations
+        {
             if (_isRunning)
             {
                 if (_blendRunValue < 1)
@@ -104,24 +129,6 @@ namespace HiringTest
                 else
                     _blendRunValue = 0;
             }
-        }
-
-        void ToggleRun()
-        {
-            _isRunning = !_isRunning;
-        }
-
-        void OnPlayerLose(int actorNumber)
-        {
-            bool isThisPlayer = actorNumber == _playerManager.ActorNumber;
-            bool isThisClient = actorNumber == NetworkManager.Instance.OwnActorNumber;
-
-
-            if (!isThisClient && isThisPlayer) 
-            {
-                _anim.SetTrigger("death");
-            }
-
         }
 
     }

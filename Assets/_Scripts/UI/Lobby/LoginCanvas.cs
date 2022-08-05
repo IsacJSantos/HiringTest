@@ -2,7 +2,6 @@ using TMPro;
 using UnityEngine;
 using HiringTest.Utils;
 using Photon.Pun;
-using UnityEngine.UI;
 
 namespace HiringTest
 {
@@ -11,7 +10,6 @@ namespace HiringTest
         [SerializeField] TMP_InputField _inputField;
 
         const string NICK_NAME_PREF_KEY = "nickName"; // The key of nick name's Player Pref
-
 
         #region MonoBehaviour Callbakcs
         protected override void Awake()
@@ -28,16 +26,7 @@ namespace HiringTest
 
         private void Start()
         {
-            string _nickName = string.Empty;
-            if (PlayerPrefs.HasKey(NICK_NAME_PREF_KEY))
-            {
-                _nickName = PlayerPrefs.GetString(NICK_NAME_PREF_KEY);
-                _inputField.text = _nickName;
-            }
-
-            PhotonNetwork.NickName = _nickName;
-
-            ShowCanvas();
+            SetView();
         }
         #endregion
 
@@ -58,10 +47,23 @@ namespace HiringTest
             PhotonNetwork.NickName = value;
         }
 
+        void SetView() 
+        {
+            string _nickName = $"Player0{NetworkManager.Instance.OwnActorNumber}";
+            if (PlayerPrefs.HasKey(NICK_NAME_PREF_KEY))
+            {
+                _nickName = PlayerPrefs.GetString(NICK_NAME_PREF_KEY);
+                _inputField.text = _nickName;
+            }
+
+            PhotonNetwork.NickName = _nickName;
+
+            ShowCanvas();
+        }
 
         void OnConnectFail()
         {
-            ShowCanvas();
+            SetView();
         }
 
 

@@ -8,7 +8,6 @@ namespace HiringTest
         [SerializeField] Camera _cam;
         [SerializeField] float _maxDistance = 5f;
         [SerializeField] LayerMask _visibleLayers;
-        [SerializeField] /*PlayerManager*/ PlayerMovementController _playerController;
 
         IInteractable _interactable;
         InputManager _inputManager;
@@ -19,6 +18,7 @@ namespace HiringTest
         Transform _currentTransform; // Current object captured by the ray
 
         bool _isEnable;
+
         #region MonoBehaviour Callbacks
 
         private void Update()
@@ -32,25 +32,11 @@ namespace HiringTest
         {
             if (!_isEnable) return;
 
-            _ray = _cam.ScreenPointToRay(_screenPoint);
-            if (Physics.Raycast(_ray, out _hit, _maxDistance, _visibleLayers))
-            {
-                if (_currentTransform != null && _currentTransform == _hit.transform) return; // This object is already verified
-
-                _currentTransform = _hit.transform;
-
-                if (!_hit.transform.TryGetComponent<IInteractable>(out _interactable))
-                    _interactable = null;
-            }
-            else
-            {
-                _currentTransform = null;
-                _interactable = null;
-            }
-
+            CheckInteractable();
         }
 
         #endregion
+
         public void Init(Camera cam)
         {
             _cam = cam;
@@ -62,6 +48,32 @@ namespace HiringTest
         void Interact()
         {
             _interactable?.Interact();
+        }
+
+        void CheckInteractable() 
+        {
+            _ray = _cam.ScreenPointToRay(_screenPoint);
+            if (Physics.Raycast(_ray, out _hit, _maxDistance, _visibleLayers))
+            {
+                if (_currentTransform != null && _currentTransform == _hit.transform) return; // This object is already verified
+
+                _currentTransform = _hit.transform;
+
+                if (!_hit.transform.TryGetComponent<IInteractable>(out _interactable)) // Checks if this object is an Interactable
+                {
+                    Events.HideCanvas?.Invoke(CanvasType.Interact);
+                    _interactable = null;
+                }
+                else
+                    Events.OpenCanvas?.Invoke(CanvasType.Interact);
+
+            }
+            else if (_interactable != null) // Clean Interactable out of view
+            {
+                Events.HideCanvas?.Invoke(CanvasType.Interact);
+                _currentTransform = null;
+                _interactable = null;
+            }
         }
     }
 }

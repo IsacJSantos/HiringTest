@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using HiringTest.Utils;
 
 namespace HiringTest
@@ -7,6 +6,7 @@ namespace HiringTest
     public class PauseMenuManager : MonoBehaviour
     {
         bool _toggleMenu;
+
         #region MonoBehaviour Callbacks
         private void Update()
         {

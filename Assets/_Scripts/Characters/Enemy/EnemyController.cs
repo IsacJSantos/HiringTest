@@ -14,7 +14,8 @@ namespace HiringTest
 
         TriggerAnimType _currentTriggerAnim;
         NetworkManager _networkManager;
-        bool _enebleIA;
+        bool _enebleAI; // If the AI calcs are activated
+
         #region MonoBehabiour Callbacks
 
         private void Awake()
@@ -30,7 +31,7 @@ namespace HiringTest
             if (!_networkManager.IsMasterClient) return;
 
             _currentState = new IdleState(_npc, _agent, _animator, _visObstacleLayers);
-            _enebleIA = true;
+            _enebleAI = true;
         }
 
         private void OnDestroy()
@@ -41,9 +42,9 @@ namespace HiringTest
 
         private void Update()
         {
-            if (_enebleIA == false) return;
+            if (_enebleAI == false) return;
 
-            _currentState = _currentState.Process();
+            _currentState = _currentState.Process(); // Process enemy AI States
         }
         #endregion
 
@@ -56,10 +57,12 @@ namespace HiringTest
 
         void OnMasterClientSwitched(int actorNumber)
         {
-            if (actorNumber == _networkManager.OwnActorNumber)
+            bool isThisClient = actorNumber == _networkManager.OwnActorNumber;
+
+            if (isThisClient)
             {
                 _currentState = new IdleState(_npc, _agent, _animator, _visObstacleLayers);
-                _enebleIA = true;
+                _enebleAI = true;
             }
         }
     }

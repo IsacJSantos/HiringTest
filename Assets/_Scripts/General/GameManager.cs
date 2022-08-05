@@ -6,7 +6,6 @@ namespace HiringTest
 {
     public class GameManager : Singleton<GameManager>
     {
-
         [SerializeField] Transform[] _enemyCheckPoints;
         [SerializeField] Transform[] _playerSpawnPoints;
         [SerializeField] Transform _camTransform;
@@ -21,6 +20,7 @@ namespace HiringTest
         private void Start()
         {
             _networkManager = NetworkManager.Instance;
+
             SpawnEnemy();
             SpawnPlayer();
         }
@@ -41,7 +41,8 @@ namespace HiringTest
 
         void SpawnPlayer()
         {
-            Vector3 playerSpawnPos = _playerSpawnPoints[_networkManager.OwnActorNumber - 1].position;
+            Vector3 playerSpawnPos = _networkManager.IsMasterClient ? _playerSpawnPoints[0].position : _playerSpawnPoints[1].position;
+
             PlayerManager playerManager = _networkManager.InstantiateNetworkedObject(_playerPrefabRef, playerSpawnPos).GetComponent<PlayerManager>();
             if (playerManager != null)
             {

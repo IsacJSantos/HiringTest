@@ -1,5 +1,5 @@
-using UnityEngine;
 using HiringTest.Utils;
+
 namespace HiringTest
 {
     public class VictoryCanvas : BaseCanvas
@@ -18,9 +18,11 @@ namespace HiringTest
         }
         #endregion
 
-        void OnPlayerEscaped(int actorNumber) 
+        void OnPlayerEscaped(int actorNumber)
         {
-            if (NetworkManager.Instance.OwnActorNumber == actorNumber) 
+            bool isThisClient = actorNumber == NetworkManager.Instance.OwnActorNumber;
+
+            if (isThisClient)
             {
                 ShowCanvas();
             }

@@ -6,7 +6,7 @@ namespace HiringTest
 {
     public class PatrolState : State
     {
-        float _patrolSpeed = 1.5f;
+        float _patrolSpeed = 1.6f;
         public PatrolState(GameObject npc, NavMeshAgent agent, Animator anim, LayerMask viewObstacleLayers)
             : base(npc, agent, anim, viewObstacleLayers)
         {
@@ -24,12 +24,12 @@ namespace HiringTest
 
         public override void Update()
         {
-            if (IsLookingAtTarget()) // Go to Pursue State
+            if (IsLookingAtTarget()) // Checks if this enemy has seen a player
             {
                 _nextState = new PursueState(_npc, _agent, _anim, _viewObstacleLayers, _target);
                 _stage = StateEventType.EXIT;
             }
-            else if (Random.Range(0, 2000) <= 1)// Go to Idle State
+            else if (Random.Range(0, 2000) <= 1) // Go randomly to Idle State
             {
                 _nextState = new IdleState(_npc, _agent, _anim, _viewObstacleLayers);
                 _stage = StateEventType.EXIT;

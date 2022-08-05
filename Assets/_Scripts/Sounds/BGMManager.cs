@@ -23,20 +23,20 @@ namespace HiringTest
 
         public void PlayMusic(AudioClip audioClip)
         {
-            ToogleAudioClip(false, () =>
+            ToogleAudioClipVolume(false, () =>
              {
                  _audioSource.clip = audioClip;
                  _audioSource.Play();
-                 ToogleAudioClip(true);
+                 ToogleAudioClipVolume(true);
              });
         }
 
         public void StopMusic()
         {
-            ToogleAudioClip(false, () => { _audioSource.Stop(); });
+            ToogleAudioClipVolume(false, () => { _audioSource.Stop(); });
         }
 
-        void ToogleAudioClip(bool play, Action callback = null)
+        void ToogleAudioClipVolume(bool play, Action callback = null)
         {
             float targetVolume = play ? _volume : 0;
             _audioSource.DOFade(targetVolume, _transitionDelay).OnComplete(() =>

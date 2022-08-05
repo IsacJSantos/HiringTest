@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
@@ -8,8 +6,8 @@ namespace HiringTest
     public class CinemachinePOVExtension : CinemachineExtension
     {
         [SerializeField] float _clampAngle = 80f;
-        [SerializeField] float _horizontlSpeed = 10f;
-        [SerializeField] float _verticallSpeed = 10f;
+        [SerializeField] float _horizontlSpeed = 4.5f;
+        [SerializeField] float _verticallSpeed = 4.5f;
 
         InputManager _inputManager;
         Vector3 _startRotation;

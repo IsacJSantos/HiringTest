@@ -5,7 +5,7 @@ namespace HiringTest.Utils
     #region General
 
     [System.Serializable]
-    public enum CanvasType { Lobby, Login, Pause, Connecting, Victory, Lose };
+    public enum CanvasType { Lobby, Login, Pause, Connecting, Victory, Lose, Interact };
 
 
     [System.Serializable]

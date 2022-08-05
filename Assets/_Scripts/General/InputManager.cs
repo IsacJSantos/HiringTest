@@ -1,4 +1,3 @@
-using UnityEngine.InputSystem;
 using HiringTest.Utils;
 using UnityEngine;
 
@@ -75,7 +74,8 @@ namespace HiringTest
 
         void DisablePlayerMovement(int actorNumber)
         {
-            if (actorNumber == NetworkManager.Instance.OwnActorNumber)
+            bool isThisClient = actorNumber == NetworkManager.Instance.OwnActorNumber;
+            if (isThisClient)
             {
                 Cursor.visible = true;
                 _inputControll.PlayerControl.Disable();

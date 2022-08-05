@@ -50,8 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerPanelEntryRef: UI/PlayerPanelEntry
-  _playerListTrans: {fileID: 4939985224326486645}
-  _readyButtonText: {fileID: 4939985222768325829}
+  _playerListContainer: {fileID: 4939985224326486645}
   _loadLevelScreemImg: {fileID: 4647067176234862552}
 --- !u!1 &4939985222556788116
 GameObject:
@@ -1139,6 +1138,7 @@ MonoBehaviour:
   _menuType: 0
   _fadeDuration: 0.3
   _startGameButton: {fileID: 4939985224054678520}
+  _readyButtonText: {fileID: 4939985222768325829}
 --- !u!225 &2589170174247968500
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1147,7 +1147,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4939985223792319153}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0

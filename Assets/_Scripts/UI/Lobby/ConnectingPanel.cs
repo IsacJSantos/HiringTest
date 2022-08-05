@@ -35,7 +35,10 @@ namespace HiringTest
 
         public override void OnOpenMenu(CanvasType menuType)
         {
-            InitConnectingCanvas();
+            if (menuType == _menuType )
+            {
+                InitConnectingCanvas();
+            }
             base.OnOpenMenu(menuType);
         }
 

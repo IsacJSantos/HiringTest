@@ -32,14 +32,6 @@ namespace HiringTest
             _viewObstacleLayers = viewObstacleLayers;
         }
 
-        public virtual void Enter()
-        {
-            _stage = StateEventType.UPDATE;
-            NetworkManager.Instance.CallEnemyInitStateRPC(StateName);
-        }
-        public virtual void Update() { }
-        public virtual void Exit() { _stage = StateEventType.EXIT; }
-
         public State Process()
         {
             if (_stage == StateEventType.ENTER)
@@ -55,25 +47,34 @@ namespace HiringTest
             return this;
         }
 
+        #region Event Methods
+        public virtual void Enter()
+        {
+            _stage = StateEventType.UPDATE;
+            NetworkManager.Instance.CallEnemyInitStateRPC(StateName);
+        }
+        public virtual void Update() { }
+        public virtual void Exit() { _stage = StateEventType.EXIT; }
+
+        #endregion
+
+
         public bool IsLookingAtTarget()
         {
             if (Time.time < _time) return false;
-
             _time = Time.time + _viewDelay;
 
             Transform[] targets = GetTargetInArea();
 
             if (targets == null || targets.Length < 1) return false;
 
-            int count = targets.Length;
-
-            for (int i = 0; i < count; i++)
+            foreach (Transform target in targets)
             {
-                if (IsInAngle(targets[i].position))
+                if (IsInAngle(target.position))
                 {
-                    if (!HasObstacle(targets[i].position))
+                    if (!HasObstacle(target.position))
                     {
-                        _target = targets[i];
+                        _target = target;
                         return true;
                     }
                 }
@@ -92,6 +93,8 @@ namespace HiringTest
         {
             return Vector3.Distance(_npc.transform.position, _target.position) > _viewDistance;
         }
+
+
 
         Transform[] GetTargetInArea()
         {
@@ -117,7 +120,7 @@ namespace HiringTest
             return Vector3.Angle(targetDir, _npc.transform.forward) <= _viewAngle;
         }
 
-        bool HasObstacle(Vector3 targetPos)
+        bool HasObstacle(Vector3 targetPos) // Checks if there is obstacle btw the enemy and the player
         {
             Vector3 direction = targetPos - _npc.transform.position;
             float distance = Vector3.Distance(targetPos, _npc.transform.position);

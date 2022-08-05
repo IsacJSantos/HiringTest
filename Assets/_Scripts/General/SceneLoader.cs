@@ -1,4 +1,3 @@
-using UnityEngine;
 using UnityEngine.SceneManagement;
 using HiringTest.Utils;
 
@@ -27,10 +26,10 @@ namespace HiringTest
         }
         #endregion
 
-       
         void OnDisconnect()
         {
-            if (SceneManager.GetActiveScene().buildIndex == (int)SceneType.Gameplay) 
+            bool isInGameplayScene = SceneManager.GetActiveScene().buildIndex == (int)SceneType.Gameplay;
+            if (isInGameplayScene) 
             {
                 SceneManager.LoadScene((int)SceneType.Menu);
             }

@@ -41,7 +41,8 @@ namespace HiringTest
 
         void SpawnPlayer()
         {
-            Vector3 playerSpawnPos = _playerSpawnPoints[_networkManager.OwnActorNumber - 1].position;
+            Vector3 playerSpawnPos = _networkManager.IsMasterClient ? _playerSpawnPoints[0].position : _playerSpawnPoints[1].position;
+
             PlayerManager playerManager = _networkManager.InstantiateNetworkedObject(_playerPrefabRef, playerSpawnPos).GetComponent<PlayerManager>();
             if (playerManager != null)
             {

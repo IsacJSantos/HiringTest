@@ -77,7 +77,7 @@ namespace HiringTest
             
             if (isThisClient)
             {
-                ToggleStartButtonActive(false);
+                ToggleStartButtonActive(true);
             }
         }
 

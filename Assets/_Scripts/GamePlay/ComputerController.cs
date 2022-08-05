@@ -38,6 +38,7 @@ namespace HiringTest
         void OnOpenExitDoor() 
         {
             _doorIsOpen = true;
+            _renderer.material = _doorOpenMaterial;
         }
 
 

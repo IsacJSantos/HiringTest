@@ -24654,6 +24654,10 @@ PrefabInstance:
       value: Fridge
       objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: 7661b0d73cd9aa144a2fcbed3f216530, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 7661b0d73cd9aa144a2fcbed3f216530, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
